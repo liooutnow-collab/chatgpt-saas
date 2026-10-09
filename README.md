@@ -1,4 +1,4 @@
-# L.I.O — Lead Intelligence Platform
+# L.I.O — Lead, Insights & Outreach
 
 A foundation for the **Lead Intelligence** SaaS product for agencies.
 
