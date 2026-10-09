@@ -58,6 +58,20 @@ export default function SettingsPage() {
           <li>Email/password authentication and quota enforcement are handled by Supabase.</li>
         </ul>
       </section>
+
+      <section className="space-y-2 rounded-xl border border-slate-200 bg-white p-5">
+        <h2 className="text-sm font-medium text-slate-900">Contact us</h2>
+        <p className="text-sm text-slate-500">
+          Questions or feedback? Email us at{" "}
+          <a
+            href="mailto:contact.lio@protonmail.com"
+            className="font-medium text-slate-900 underline underline-offset-2 hover:text-slate-600"
+          >
+            contact.lio@protonmail.com
+          </a>
+          .
+        </p>
+      </section>
     </div>
   );
 }

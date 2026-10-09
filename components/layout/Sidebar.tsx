@@ -13,6 +13,7 @@ import {
   Sparkles,
   LogIn,
   LogOut,
+  Mail,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -147,6 +148,14 @@ export function Sidebar() {
             </Link>
           )}
           {authError && <p role="alert" className="mb-2 text-xs text-red-300">{authError}</p>}
+          <a
+            href="mailto:contact.lio@protonmail.com"
+            onClick={() => setOpen(false)}
+            className="mb-3 inline-flex min-h-9 items-center gap-2 rounded-md px-2 text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            <Mail className="h-4 w-4" />
+            Contact us
+          </a>
           <div className="text-[11px] leading-relaxed text-slate-500">
             {email ? (
               <>Server-side lead provider connected.<br />Lifetime usage is enforced per account.</>
