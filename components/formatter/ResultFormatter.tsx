@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Download, FileSpreadsheet, RotateCcw } from "lucide-react";
 import * as XLSX from "xlsx";
 import { Lead } from "@/lib/providers/types";
+import { storage } from "@/lib/storage/local-storage";
 import {
   createExportFilename,
   createFormattedRows,
@@ -22,7 +23,6 @@ interface Props {
   leads: Lead[];
 }
 
-const STORAGE_PREFIX = "li_formatter_fields:";
 const DEFAULT_FIELDS = FORMATTER_PRESETS["Contact List"];
 
 export function ResultFormatter({ searchId, businessType, location, leads }: Props) {
@@ -30,22 +30,23 @@ export function ResultFormatter({ searchId, businessType, location, leads }: Pro
   const [preset, setPreset] = useState<FormatterPreset>("Contact List");
 
   useEffect(() => {
-    const saved = localStorage.getItem(`${STORAGE_PREFIX}${searchId}`);
-    if (!saved) return;
-    try {
-      const parsed = JSON.parse(saved) as FormatterFieldId[];
-      const valid = parsed.filter((id) => Boolean(getFormatterField(id)));
+    const loadSavedFields = () => {
+      const saved = storage.getFormatterFields(searchId) as FormatterFieldId[];
+      const valid = saved.filter((id) => Boolean(getFormatterField(id)));
       if (valid.length > 0) {
         setSelectedFields(valid);
         setPreset("Custom");
+      } else {
+        setSelectedFields([...DEFAULT_FIELDS]);
+        setPreset("Contact List");
       }
-    } catch {
-      // Ignore malformed local state and keep the useful default preset.
-    }
+    };
+    loadSavedFields();
+    return storage.subscribeUserIdChange(loadSavedFields);
   }, [searchId]);
 
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_PREFIX}${searchId}`, JSON.stringify(selectedFields));
+    storage.setFormatterFields(searchId, selectedFields);
   }, [searchId, selectedFields]);
 
   const uniqueLeads = useMemo(() => {

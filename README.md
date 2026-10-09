@@ -67,18 +67,20 @@ the server API owns provider access:
 - Queue advances automatically when a job finishes or is cancelled
 - One `POST /api/leads/search` request per started search
 - Active requests use `AbortController` and are aborted on cancellation
-- Retry creates one new request with the original parameters
+- Retry reuses the same attempt ID; settled results are replayed without another provider search or quota charge
 
 ### Persistence
 
-All state lives in `localStorage`:
+Browser-local state lives in `localStorage`, namespaced by the authenticated user ID:
 
 - Searches & status
 - Normalized provider leads
 - Saved leads
-- Usage (Free plan: 100 discoveries)
+- Formatter and search-brief preferences
 
-Refreshing the page restores state. In-progress jobs are marked **cancelled** on reload (there is no real background worker in the browser).
+Discovery usage is enforced server-side by Supabase, not stored as trusted browser state. Legacy keys from before account partitioning are not imported automatically because they have no account owner metadata.
+
+Refreshing the page restores state. Active and queued jobs are marked **cancelled** on reload and can be retried explicitly (there is no real background worker in the browser).
 
 ### Data separation
 

@@ -34,14 +34,15 @@ type Listener = () => void;
 type SearchResponse = {
   provider?: string;
   results?: Lead[];
-  error?: { message?: string };
+  error?: { code?: string; message?: string };
 };
 
 /**
  * Client-side search lifecycle manager.
  *
- * Each started job makes exactly one request to the server API. The browser
- * owns only the lifecycle and local persistence; provider work stays server-side.
+ * Each started job makes one request, with a single fresh-ID fallback only for
+ * an explicit retry of a legacy settled attempt without a stored result. The
+ * browser owns lifecycle and local persistence; provider work stays server-side.
  * Active requests can be aborted, and queued jobs start only after capacity is
  * released by completion, failure, or cancellation.
  */
@@ -50,7 +51,9 @@ class SearchManager {
   private leads: Record<string, Lead> = {};
   private listeners: Set<Listener> = new Set();
   private controllers: Map<string, AbortController> = new Map();
+  private retryFallbacks: Set<string> = new Set();
   private initialized = false;
+  private userId: string | null = null;
 
   init() {
     if (this.initialized || typeof window === "undefined") return;
@@ -59,16 +62,20 @@ class SearchManager {
     this.searches = storage.getSearches();
     this.leads = storage.getLeads();
 
-    // A browser refresh cannot safely resume an in-flight request.
+    // A browser refresh cannot safely resume an in-flight request, and queued
+    // work should not begin automatically after the user's page context ends.
     let changed = false;
     this.searches = this.searches.map((search) => {
-      if (ACTIVE_STATUSES.includes(search.status)) {
+      if (ACTIVE_STATUSES.includes(search.status) || search.status === "queued") {
         changed = true;
         return {
           ...search,
           status: "cancelled" as SearchStatus,
           completedAt: new Date().toISOString(),
-          statusMessage: "Interrupted by page refresh — partial results kept",
+          statusMessage:
+            search.status === "queued"
+              ? "Not started before page refresh — retry when ready"
+              : "Interrupted by page refresh — partial results kept",
         };
       }
       return search;
@@ -76,6 +83,36 @@ class SearchManager {
 
     if (changed) this.persist();
     this.advanceQueue();
+  }
+
+  setUserId(userId: string | null) {
+    if (this.userId === userId) return;
+
+    if (this.initialized) {
+      const completedAt = new Date().toISOString();
+      this.searches = this.searches.map((search) =>
+        ACTIVE_STATUSES.includes(search.status) || search.status === "queued"
+          ? {
+              ...search,
+              status: "cancelled" as SearchStatus,
+              completedAt,
+              statusMessage: "Cancelled because the signed-in account changed",
+            }
+          : search
+      );
+      this.persist();
+      this.controllers.forEach((controller) => controller.abort());
+      this.controllers.clear();
+    }
+
+    this.retryFallbacks.clear();
+    this.userId = userId;
+    storage.setUserId(userId);
+    this.searches = [];
+    this.leads = {};
+    this.initialized = false;
+    this.init();
+    this.notify();
   }
 
   subscribe(listener: Listener): () => void {
@@ -197,26 +234,41 @@ class SearchManager {
       this.controllers.delete(id);
       return;
     }
+    const allowFreshAttemptFallback = this.retryFallbacks.delete(id);
     const attemptId = job.attemptId || newAttemptId();
     if (job.attemptId !== attemptId) this.updateJob(id, { attemptId });
 
     try {
-      const response = await fetch("/api/leads/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        signal: controller.signal,
-        body: JSON.stringify({
-          requestId: attemptId,
-          businessType: job.businessType,
-          location: job.location,
-          limit: job.requestedLeads,
-          offset: 0,
-          brief: job.brief,
-        }),
-      });
+      const sendRequest = (requestId: string) =>
+        fetch("/api/leads/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          signal: controller.signal,
+          body: JSON.stringify({
+            requestId,
+            businessType: job.businessType,
+            location: job.location,
+            limit: job.requestedLeads,
+            offset: 0,
+            brief: job.brief,
+          }),
+        });
 
-      const payload = (await response.json()) as SearchResponse;
+      let response = await sendRequest(attemptId);
+      let payload = (await response.json()) as SearchResponse;
+      if (
+        allowFreshAttemptFallback &&
+        response.status === 409 &&
+        payload.error?.code === "DUPLICATE_RESULT_UNAVAILABLE"
+      ) {
+        // An older settled reservation may predate result caching. This explicit
+        // user retry starts one fresh attempt; subsequent retries keep its ID.
+        const freshAttemptId = newAttemptId();
+        this.updateJob(id, { attemptId: freshAttemptId });
+        response = await sendRequest(freshAttemptId);
+        payload = (await response.json()) as SearchResponse;
+      }
       if (!response.ok || !Array.isArray(payload.results)) {
         throw new Error(
           payload.error?.message ||
@@ -299,10 +351,10 @@ class SearchManager {
     const job = this.getSearch(id);
     if (!job || job.status !== "error" || this.controllers.has(id)) return null;
 
-    // Retry the same job so search history does not accumulate duplicate
-    // records. The next queue slot starts exactly one new provider request.
+    // Reuse the idempotency key: if a previous response was lost after the
+    // server settled quota, the API can replay its persisted result payload.
+    this.retryFallbacks.add(id);
     this.updateJob(id, {
-      attemptId: newAttemptId(),
       status: "queued",
       completedAt: null,
       progress: job.processedLeads > 0 ? job.progress : 0,

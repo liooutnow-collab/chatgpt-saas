@@ -37,7 +37,7 @@ export default function SettingsPage() {
       <section className="space-y-3">
         <h2 className="text-sm font-medium text-slate-900">Data</h2>
         <p className="text-sm text-slate-500">
-          Search history, results, saved leads, and brief preferences remain in this browser&apos;s local storage. Refreshing the page preserves them. In-progress searches are marked cancelled on refresh; no background worker is used.
+          Search history, results, saved leads, formatter choices, and brief preferences remain in this browser&apos;s local storage, partitioned by your signed-in account. They are not synced between browsers. Older unscoped browser data is not imported automatically, to avoid showing one account&apos;s data to another. Refreshing the page preserves account-scoped data; active or queued searches are cancelled and require an explicit retry.
         </p>
         <button
           onClick={handleClearAll}
@@ -54,7 +54,7 @@ export default function SettingsPage() {
           <li>Searches use the configured server-side lead provider.</li>
           <li>Choose 5, 10, 25, 50, or 100 results for each search.</li>
           <li>One account receives up to 100 lifetime discoveries; only actual returned businesses count.</li>
-          <li>Search history and saved leads are stored in this browser.</li>
+          <li>Search history and saved leads are stored in this browser and isolated by signed-in account.</li>
           <li>Email/password authentication and quota enforcement are handled by Supabase.</li>
         </ul>
       </section>

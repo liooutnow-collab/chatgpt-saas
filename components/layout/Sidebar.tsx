@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { searchManager } from "@/lib/search/search-manager";
 import { usageManager } from "@/lib/usage/usage-manager";
 
 const NAV = [
@@ -39,9 +40,9 @@ export function Sidebar() {
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
     const supabase = createClient();
-    void supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setEmail(session?.user.email ?? null);
+      searchManager.setUserId(session?.user.id ?? null);
       if (event === "SIGNED_IN" || event === "SIGNED_OUT") {
         usageManager.resetForAuthChange();
       }

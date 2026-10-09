@@ -54,8 +54,12 @@ export function SearchForm() {
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
 
   useEffect(() => {
-    setPreferences({ ...DEFAULT_BRIEF_PREFERENCES, ...storage.getBriefPreferences() });
-    setPreferencesLoaded(true);
+    const loadPreferences = () => {
+      setPreferences({ ...DEFAULT_BRIEF_PREFERENCES, ...storage.getBriefPreferences() });
+      setPreferencesLoaded(true);
+    };
+    loadPreferences();
+    return storage.subscribeUserIdChange(loadPreferences);
   }, []);
 
   const effectiveType = businessType === "Custom" ? customType.trim() : businessType;
