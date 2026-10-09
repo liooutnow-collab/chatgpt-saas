@@ -64,7 +64,7 @@ export default function SettingsPage() {
         <p className="text-sm text-slate-500">
           Questions or feedback? Email us at{" "}
           <a
-            href="mailto:contact.lio@protonmail.com"
+            href="mailto:contact.lio@protonmail.com?subject=Contact%20from%20L.I.O"
             className="font-medium text-slate-900 underline underline-offset-2 hover:text-slate-600"
           >
             contact.lio@protonmail.com

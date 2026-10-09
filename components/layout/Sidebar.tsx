@@ -149,7 +149,7 @@ export function Sidebar() {
           )}
           {authError && <p role="alert" className="mb-2 text-xs text-red-300">{authError}</p>}
           <a
-            href="mailto:contact.lio@protonmail.com"
+            href="mailto:contact.lio@protonmail.com?subject=Contact%20from%20L.I.O"
             onClick={() => setOpen(false)}
             className="mb-3 inline-flex min-h-9 items-center gap-2 rounded-md px-2 text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
           >
