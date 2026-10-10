@@ -78,7 +78,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
           {canView && (
             <Link
               href={`/searches/${search.id}`}
-              className="inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
             >
               <Eye className="w-3.5 h-3.5" />
               View Results

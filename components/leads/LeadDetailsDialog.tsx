@@ -120,7 +120,7 @@ export function LeadDetailsDialog({ lead, onClose }: Props) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/45 p-3 sm:p-6"
+      className="fixed inset-0 z-[100] flex justify-end bg-slate-950/45"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
@@ -131,7 +131,7 @@ export function LeadDetailsDialog({ lead, onClose }: Props) {
         aria-modal="true"
         aria-labelledby="lead-details-title"
         tabIndex={-1}
-        className="max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl"
+        className="h-full max-h-full w-full max-w-xl overflow-y-auto rounded-none border-l border-slate-200 bg-white shadow-2xl sm:rounded-l-2xl"
       >
         <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-6">
           <div className="min-w-0">
