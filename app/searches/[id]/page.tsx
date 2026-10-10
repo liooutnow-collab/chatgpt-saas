@@ -136,7 +136,7 @@ export default function SearchDetailPage({
 
       {search.brief && (
         <details className="rounded-xl border border-slate-200 bg-white px-4 py-3 sm:px-5">
-          <summary className="cursor-pointer list-none text-sm font-medium text-slate-700">Search Brief</summary>
+          <summary className="cursor-pointer text-sm font-medium text-slate-700">Search Brief</summary>
           <div className="mt-3 grid gap-2 border-t border-slate-100 pt-3 text-sm text-slate-500 sm:grid-cols-3">
             <p><span className="font-medium text-slate-700">Goal:</span> {search.brief.goal || "Not specified"}</p>
             <p><span className="font-medium text-slate-700">Priorities:</span> {briefSummary[1] || "None"}</p>

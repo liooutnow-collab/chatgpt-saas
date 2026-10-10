@@ -68,7 +68,7 @@ export function LeadCard({ lead, searchId }: Props) {
             aria-pressed={saved}
             onClick={() => (saved ? unsave(lead.id) : save(lead.id, searchId))}
             className={cn(
-              "inline-flex min-h-8 shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-xs font-medium",
+              "inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-xs font-medium",
               saved
                 ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                 : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
