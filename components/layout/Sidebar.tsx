@@ -77,7 +77,7 @@ export function Sidebar() {
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="rounded-md p-2 text-slate-600 hover:bg-slate-100"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100"
           aria-label="Toggle menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

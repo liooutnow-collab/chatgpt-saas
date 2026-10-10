@@ -68,7 +68,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
           {isActive && (
             <button
               onClick={() => setShowCancel(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              className="inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
             >
               <X className="w-3.5 h-3.5" />
               Cancel Search
@@ -78,7 +78,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
           {canView && (
             <Link
               href={`/searches/${search.id}`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors"
+              className="inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-xs font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors"
             >
               <Eye className="w-3.5 h-3.5" />
               View Results

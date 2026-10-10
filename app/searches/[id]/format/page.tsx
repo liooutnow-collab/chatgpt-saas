@@ -19,7 +19,7 @@ export default function FormatSearchPage({ params }: { params: Promise<{ id: str
   if (!canFormat) {
     return (
       <div className="space-y-4 py-8">
-        <Link href={`/searches/${id}`} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800">
+        <Link href={`/searches/${id}`} className="inline-flex min-h-10 items-center gap-1.5 px-2 py-2 text-sm text-slate-500 hover:text-slate-800">
           <ArrowLeft className="h-4 w-4" /> Back to search
         </Link>
         <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center">
@@ -33,7 +33,7 @@ export default function FormatSearchPage({ params }: { params: Promise<{ id: str
   return (
     <div className="space-y-6">
       <div>
-        <Link href={`/searches/${id}`} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 mb-4">
+        <Link href={`/searches/${id}`} className="mb-4 inline-flex min-h-10 items-center gap-1.5 px-2 py-2 text-sm text-slate-500 hover:text-slate-800">
           <ArrowLeft className="h-4 w-4" /> Back to results
         </Link>
         <p className="text-xs font-medium uppercase tracking-wider text-slate-400">{search.processedLeads} results available</p>
