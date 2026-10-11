@@ -73,7 +73,7 @@ export function Sidebar() {
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
-          <span className="text-sm font-medium text-slate-900">Lead Intelligence</span>
+          <span className="text-sm font-medium text-slate-900">L.I.O.</span>
         </div>
         <button
           onClick={() => setOpen(!open)}
@@ -98,7 +98,7 @@ export function Sidebar() {
             <Sparkles className="h-4.5 w-4.5 text-white" />
           </div>
           <div>
-            <div className="text-sm font-medium tracking-tight">Lead Intelligence</div>
+            <div className="text-sm font-medium tracking-tight">L.I.O.</div>
             <div className="text-[11px] text-slate-400">Free Plan</div>
           </div>
         </div>

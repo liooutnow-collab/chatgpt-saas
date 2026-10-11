@@ -1,6 +1,6 @@
-# L.I.O — Lead Intelligence
+# L.I.O.
 
-The **Lead Intelligence** SaaS product for discovering and organizing business leads.
+The **L.I.O.** SaaS product for discovering and organizing business leads.
 
 This repository validates the core discovery experience:
 

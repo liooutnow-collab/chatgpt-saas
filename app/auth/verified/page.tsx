@@ -15,13 +15,13 @@ export default function EmailVerifiedPage() {
           Your account is ready
         </h1>
         <p className="mt-3 text-sm leading-6 text-slate-600">
-          Your email address has been confirmed and your Lead Intelligence account is active. Continue to sign in and start discovering businesses.
+          Your email address has been confirmed and your L.I.O. account is active. Continue to sign in and start discovering businesses.
         </p>
         <Link
           href="/login"
           className="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-slate-900 px-4 text-sm font-medium text-white transition-colors hover:bg-slate-800"
         >
-          Continue to Lead Intelligence
+          Continue to L.I.O.
         </Link>
       </section>
     </main>

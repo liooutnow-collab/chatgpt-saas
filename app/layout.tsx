@@ -3,7 +3,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
 
 export const metadata: Metadata = {
-  title: "Lead Intelligence",
+  title: "L.I.O.",
   description: "Find businesses worth contacting with server-side lead discovery.",
 };
 

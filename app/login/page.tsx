@@ -106,7 +106,7 @@ export default function LoginPage() {
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-medium tracking-tight text-slate-900">Lead Intelligence</h1>
+            <h1 className="text-xl font-medium tracking-tight text-slate-900">L.I.O.</h1>
             <p className="text-sm text-slate-500">Sign in to manage your discoveries</p>
           </div>
         </div>
