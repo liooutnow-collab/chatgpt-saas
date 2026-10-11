@@ -1,6 +1,6 @@
-# L.I.O — Lead, Insights & Outreach
+# L.I.O — Lead Intelligence
 
-A foundation for the **Lead Intelligence** SaaS product for agencies.
+The **Lead Intelligence** SaaS product for discovering and organizing business leads.
 
 This repository validates the core discovery experience:
 
@@ -19,7 +19,7 @@ Agencies need a reliable way to:
 3. Eventually **contact and follow up** with them
 
 This release focuses exclusively on the **find / search / queue / results / save** loop.
-Real lead providers, outreach, and billing are intentionally out of scope.
+Outreach automation, AI Insights, CRM sync, and billing are intentionally out of scope.
 
 ---
 
@@ -94,7 +94,7 @@ This separation is intentional so a future Supabase migration stays straightforw
 
 ## Tech Stack
 
-- **Next.js 15** (App Router)
+- **Next.js 16** (App Router)
 - **TypeScript**
 - **Tailwind CSS**
 - **Lucide React** (icons)
@@ -115,18 +115,18 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploying to Vercel
 
-This existing GitHub repository is ready to import into Vercel:
+The production Vercel project is linked to
+[`liooutnow-collab/L.I.O`](https://github.com/liooutnow-collab/L.I.O) on the
+`main` branch. Vercel detects the Next.js App Router project automatically.
 
-1. Open [Vercel](https://vercel.com/) and choose **Add New Project**.
-2. Connect GitHub if it is not connected yet.
-3. Select the existing `sayemw838-cmyk/outreach-saas` repository.
-4. Vercel detects the Next.js App Router project automatically.
-5. Keep the default build settings and deploy.
+Set these environment variables in Vercel as appropriate for the deployment:
 
-Set `GEOAPIFY_API_KEY` as a server-side environment variable in Vercel for
-Production, Preview, and Development. Development without the key uses the
-Mock Business Directory provider; production fails safely instead of silently
-using mock data.
+- `GEOAPIFY_API_KEY` for production lead discovery
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or the legacy anon key if required)
+
+Development without `GEOAPIFY_API_KEY` uses the Mock Business Directory
+provider; production fails safely instead of silently using mock data.
 
 ---
 
@@ -137,9 +137,9 @@ using mock data.
 | Search lifecycle runs in the browser | Provider requests run through the Next.js server route |
 | Interrupted jobs become cancelled on refresh | Browser cannot keep background timers |
 | Geoapify is the current real provider | Mock provider remains available for development/testing |
-| No authentication | Will use Supabase Auth later |
-| Free plan is simulated | No Stripe / billing yet |
-| Usage resets only via Settings | Demo convenience |
+| Free plan is currently fixed | No payment provider or billing integration yet |
+| Search and saved-lead records are browser-local | Supabase currently enforces authentication and discovery usage, while lead/search persistence remains local |
+| AI Insights and Outreach automation are unavailable | These features have not been implemented |
 
 ---
 
