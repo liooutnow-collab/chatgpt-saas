@@ -36,7 +36,7 @@ SearchManager makes one provider request per started search
         ↓
 User views results, saves interesting leads
         ↓
-Usage is charged only for leads actually discovered
+Usage is charged only for valid, unique leads actually discovered; the Free plan starts with 15 lead units per rolling seven-day period
 ```
 
 Multiple searches can be created without waiting. Extra jobs wait in a queue and automatically start when a slot frees up.
@@ -78,7 +78,7 @@ Browser-local state lives in `localStorage`, namespaced by the authenticated use
 - Saved leads
 - Formatter and search-brief preferences
 
-Discovery usage is enforced server-side by Supabase, not stored as trusted browser state. Legacy keys from before account partitioning are not imported automatically because they have no account owner metadata.
+Discovery usage is enforced server-side by Supabase, not stored as trusted browser state. Free and future paid-plan entitlements are configured in the database; the current Free plan resets on a rolling seven-day period. Legacy keys from before account partitioning are not imported automatically because they have no account owner metadata.
 
 Refreshing the page restores state. Active and queued jobs are marked **cancelled** on reload and can be retried explicitly (there is no real background worker in the browser).
 
@@ -137,7 +137,7 @@ provider; production fails safely instead of silently using mock data.
 | Search lifecycle runs in the browser | Provider requests run through the Next.js server route |
 | Interrupted jobs become cancelled on refresh | Browser cannot keep background timers |
 | Geoapify is the current real provider | Mock provider remains available for development/testing |
-| Free plan is currently fixed | No payment provider or billing integration yet |
+| Billing is not integrated | Free and future paid-plan entitlements are prepared server-side, but no payment provider or billing checkout is enabled |
 | Search and saved-lead records are browser-local | Supabase currently enforces authentication and discovery usage, while lead/search persistence remains local |
 | AI Insights and Outreach automation are unavailable | These features have not been implemented |
 
