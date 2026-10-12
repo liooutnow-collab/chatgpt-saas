@@ -29,6 +29,7 @@ class UsageManager {
   private listeners: Set<Listener> = new Set();
   private usage: UsageState = { ...INITIAL_USAGE };
   private refreshPromise: Promise<void> | null = null;
+  private refreshPromiseGeneration: number | null = null;
   private generation = 0;
 
   subscribe(listener: Listener): () => void {
@@ -51,8 +52,12 @@ class UsageManager {
   resetForAuthChange(): void {
     this.generation += 1;
     this.refreshPromise = null;
+    this.refreshPromiseGeneration = null;
     this.usage = { ...INITIAL_USAGE };
     this.notify();
+    // The initial request can finish after Supabase emits the auth event. Start
+    // a fresh request for the new account rather than leaving the UI in loading.
+    if (typeof window !== "undefined") queueMicrotask(() => void this.refresh());
   }
 
   async refresh(): Promise<void> {
@@ -60,6 +65,7 @@ class UsageManager {
     if (this.refreshPromise) return this.refreshPromise;
 
     const generation = this.generation;
+    this.refreshPromiseGeneration = generation;
     this.usage = { ...this.usage, loading: true, error: undefined };
     this.notify();
     const controller = new AbortController();
@@ -119,9 +125,12 @@ class UsageManager {
         }
       } finally {
         window.clearTimeout(timeoutId);
+        if (this.refreshPromiseGeneration === generation) {
+          this.refreshPromise = null;
+          this.refreshPromiseGeneration = null;
+        }
         if (generation === this.generation) {
           this.notify();
-          this.refreshPromise = null;
         }
       }
     })();
