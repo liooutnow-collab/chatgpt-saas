@@ -37,6 +37,7 @@ export function SearchForm() {
   const { createSearch } = useSearches();
   const {
     remaining,
+    usage,
     loading: usageLoading,
     error: usageError,
     refresh: refreshUsage,
@@ -77,10 +78,9 @@ export function SearchForm() {
     if (!location.trim()) return "Please enter a location.";
     if (businessType === "Custom" && !customType.trim()) return "Please enter a custom business type.";
     if (!isAllowedResultCount(requestedLeads)) return `Choose one of these result counts: ${RESULT_COUNT_OPTIONS.join(", ")}.`;
-    if (usageLoading) return "Checking your lifetime discovery allowance. Please wait.";
+    if (usageLoading) return "Checking your weekly discovery allowance. Please wait.";
     if (usageError) return usageError;
     if (remaining < MIN_LEAD_COUNT) return `You need at least ${MIN_LEAD_COUNT} lead discoveries to search, but you have ${remaining} remaining.`;
-    if (remaining < requestedLeads) return `This search requests ${requestedLeads} discoveries, but you have ${remaining} remaining. Choose a smaller result count.`;
     return null;
   };
 
@@ -244,7 +244,7 @@ export function SearchForm() {
           <select id="result-count" required value={requestedLeads} onChange={(e) => { setRequestedLeads(Number(e.target.value)); setError(null); }} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10">
             {RESULT_COUNT_OPTIONS.map((count) => <option key={count} value={count}>{count} results</option>)}
           </select>
-          <p className="mt-2 text-xs text-slate-500">One search requests this many businesses; the provider may return fewer if fewer matches are available. {usageLoading ? "Checking your lifetime allowance…" : usageError ? usageError : `You have ${remaining} of 100 lifetime discoveries remaining. Choose a count no greater than your remaining allowance; otherwise no provider request will be made.`}</p>
+          <p className="mt-2 text-xs text-slate-500">One search requests up to this many businesses; the provider may return fewer, and only valid unique businesses returned consume units. {usageLoading ? "Checking your weekly allowance…" : usageError ? usageError : `You have ${remaining} of ${usage.limit} lead units remaining. Your allowance resets ${usage.resetAt ? `on ${new Date(usage.resetAt).toLocaleString()}` : "soon"}.`}</p>
           {usageError && (
             <button
               type="button"

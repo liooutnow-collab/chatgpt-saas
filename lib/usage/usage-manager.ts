@@ -7,15 +7,21 @@ type UsageResponse = {
   reserved: number;
   remaining: number;
   limit: number;
-  plan: "free";
+  plan: "free" | "pro";
+  planName: string;
+  periodLabel: string;
+  resetAt: string;
 };
 
 const INITIAL_USAGE: UsageState = {
   used: 0,
   reserved: 0,
   remaining: 0,
-  limit: 100,
+  limit: 15,
   plan: "free",
+  planName: "Free Plan",
+  periodLabel: "Weekly",
+  resetAt: null,
   loading: true,
 };
 
@@ -69,7 +75,7 @@ class UsageManager {
         if (generation !== this.generation) return;
         if (!response.ok) {
           const message = response.status === 401
-            ? "Sign in to view your lifetime allowance and run new searches."
+            ? "Sign in to view your weekly allowance and run new searches."
             : "Usage could not be loaded. Refresh to try again.";
           this.usage = { ...this.usage, loading: false, error: message };
           return;
@@ -81,7 +87,11 @@ class UsageManager {
           !Number.isInteger(data.used) ||
           !Number.isInteger(data.reserved) ||
           !Number.isInteger(data.remaining) ||
-          data.limit !== 100
+          !Number.isInteger(data.limit) || data.limit <= 0 ||
+          !["free", "pro"].includes(data.plan) ||
+          typeof data.planName !== "string" ||
+          typeof data.periodLabel !== "string" ||
+          !data.resetAt || Number.isNaN(Date.parse(data.resetAt))
         ) {
           throw new Error("The usage response was invalid.");
         }
@@ -91,7 +101,10 @@ class UsageManager {
           reserved: data.reserved,
           remaining: data.remaining,
           limit: data.limit,
-          plan: "free",
+          plan: data.plan,
+          planName: data.planName,
+          periodLabel: data.periodLabel,
+          resetAt: data.resetAt,
           loading: false,
         };
       } catch {
@@ -100,7 +113,7 @@ class UsageManager {
             ...this.usage,
             loading: false,
             error: controller.signal.aborted
-              ? "Checking lifetime usage timed out. Check your connection and retry."
+              ? "Checking weekly usage timed out. Check your connection and retry."
               : "Usage could not be loaded. Please try again.",
           };
         }

@@ -6,12 +6,15 @@ import { cn } from "@/lib/utils";
 export function UsageMeter({ compact = false }: { compact?: boolean }) {
   const { usage, remaining, loading, error, refresh } = useUsage();
   const pct = Math.min(100, Math.round(((usage.used + usage.reserved) / usage.limit) * 100));
-  const nearLimit = remaining <= 20;
+  const nearLimit = remaining <= Math.max(2, Math.ceil(usage.limit * 0.2));
+  const resetLabel = usage.resetAt
+    ? new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(usage.resetAt))
+    : "soon";
 
   if (loading) {
     return (
       <div className={compact ? "text-xs text-slate-500" : "rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-500"}>
-        Checking lifetime usage…
+        Checking weekly usage…
       </div>
     );
   }
@@ -36,7 +39,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
     return (
       <div className="flex items-center gap-2 text-xs text-slate-500">
         <span className="font-medium uppercase tracking-wide text-[10px] text-slate-700">
-          Lifetime
+          {usage.planName}
         </span>
         <span>{usage.used}/{usage.limit}</span>
         {usage.reserved > 0 && <span className="text-slate-400">+{usage.reserved} held</span>}
@@ -54,7 +57,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
     <div className="rounded-xl border border-slate-200 bg-white p-4">
       <div className="mb-2 flex items-center justify-between gap-3">
         <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
-          Lifetime allowance
+          {usage.planName} · {usage.periodLabel} allowance
         </span>
         <span className={cn("text-sm font-medium", nearLimit ? "text-amber-600" : "text-slate-700")}>
           {usage.used} / {usage.limit} used
@@ -67,7 +70,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
         />
       </div>
       <p className="mt-2 text-xs text-slate-500">
-        {remaining} lifetime discoveries remaining
+        {remaining} lead units remaining · resets {resetLabel}
         {usage.reserved > 0 && ` · ${usage.reserved} reserved for in-progress searches`}
       </p>
     </div>
