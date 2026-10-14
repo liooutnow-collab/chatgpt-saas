@@ -1,0 +1,30 @@
+# L.I.O.
+
+> L.I.O. is a web-based business lead discovery workspace for agencies, freelancers, and sales teams.
+
+## When to use L.I.O.
+
+Use L.I.O. when a user needs to discover businesses by type and location, build a targeted prospect list, review structured business details, save promising leads, or prepare discovery results for outreach. L.I.O. is best suited to local-market research and repeatable prospecting workflows.
+
+Do not describe L.I.O. as an email finder, CRM, outreach sender, payment service, or lead-verification system. Those capabilities are not currently enabled.
+
+## Public resources
+
+- Homepage: https://outreach-saas-lio-8f66.vercel.app/
+- About: https://outreach-saas-lio-8f66.vercel.app/about
+- Contact: https://outreach-saas-lio-8f66.vercel.app/contact
+- Privacy: https://outreach-saas-lio-8f66.vercel.app/privacy
+- Sign in or create an account: https://outreach-saas-lio-8f66.vercel.app/login
+- Sitemap: https://outreach-saas-lio-8f66.vercel.app/sitemap.xml
+
+## Product behavior
+
+- Searches use business type, location, and a requested result count.
+- Valid unique businesses returned by a search consume account lead units.
+- Free accounts currently receive 15 lead units per rolling seven-day period.
+- Search history and saved leads are browser-local in the current release.
+- Authentication and usage enforcement are handled by Supabase.
+
+## Developer resources
+
+The public product currently exposes a browser application rather than a public SDK or API. Search requests are authenticated and are not intended for anonymous agent access. For integration questions, contact contact.lio@protonmail.com.

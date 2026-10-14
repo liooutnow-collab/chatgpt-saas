@@ -23,7 +23,7 @@ import { searchManager } from "@/lib/search/search-manager";
 import { usageManager } from "@/lib/usage/usage-manager";
 
 const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/find-leads", label: "Find Leads", icon: Search },
   { href: "/searches", label: "Searches", icon: History },
   { href: "/saved-leads", label: "Saved Leads", icon: Bookmark },
@@ -105,7 +105,7 @@ export function Sidebar() {
 
         <nav className="flex-1 space-y-0.5 px-3 py-4">
           {NAV.map((item) => {
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             const Icon = item.icon;
             return (
               <Link
