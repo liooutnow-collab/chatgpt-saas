@@ -82,7 +82,10 @@ export interface UsageState {
   reserved: number;
   remaining: number;
   limit: number;
-  plan: "free";
+  plan: "free" | "pro";
+  planName: string;
+  periodLabel: string;
+  resetAt: string | null;
   loading: boolean;
   error?: string;
 }

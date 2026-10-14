@@ -29,7 +29,7 @@ export async function GET() {
       return response({ error: { message: "Please sign in to view usage." } }, 401);
     }
 
-    const { data, error } = await supabase.rpc("get_discovery_usage");
+    const { data, error } = await supabase.rpc("get_discovery_usage_details");
     if (error) {
       console.error("[api/usage] Discovery quota RPC failed.", { code: error.code });
       return response({ error: { message: "Usage could not be loaded." } }, 503);
@@ -45,8 +45,11 @@ export async function GET() {
       used: Number(row.used_count),
       reserved: Number(row.reserved_count),
       remaining: Number(row.remaining_count),
-      limit: Number(row.lifetime_limit),
-      plan: "free",
+      limit: Number(row.discovery_limit),
+      plan: row.plan_code,
+      planName: row.plan_name,
+      periodLabel: new Date(row.period_expires_at).getTime() - new Date(row.period_started_at).getTime() <= 7 * 24 * 60 * 60 * 1000 ? "Weekly" : "Monthly",
+      resetAt: row.period_expires_at,
     });
   } catch (error) {
     console.error("[api/usage] Unexpected handler failure.", {

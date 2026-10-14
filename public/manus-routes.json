@@ -1,6 +1,10 @@
 {
   "routes": [
-    { "path": "/", "title": "Dashboard" },
+    { "path": "/", "title": "L.I.O. Business Lead Discovery" },
+    { "path": "/about", "title": "About L.I.O." },
+    { "path": "/contact", "title": "Contact L.I.O." },
+    { "path": "/privacy", "title": "L.I.O. Privacy" },
+    { "path": "/dashboard", "title": "Dashboard" },
     { "path": "/find-leads", "title": "Find Leads" },
     { "path": "/searches", "title": "Searches" },
     { "path": "/searches/:id", "title": "Search Results" },

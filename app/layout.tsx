@@ -3,8 +3,12 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
 
 export const metadata: Metadata = {
-  title: "Lead Intelligence",
-  description: "Find businesses worth contacting with server-side lead discovery.",
+  metadataBase: new URL("https://outreach-saas-lio-8f66.vercel.app"),
+  title: { default: "L.I.O. — Business Lead Discovery", template: "%s | L.I.O." },
+  description: "Find and organize businesses worth contacting with L.I.O. business lead discovery.",
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", siteName: "L.I.O.", images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "L.I.O. business lead discovery" }] },
+  twitter: { card: "summary_large_image", images: ["/og-image.svg"] },
 };
 
 export default function RootLayout({

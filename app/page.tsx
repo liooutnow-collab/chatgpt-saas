@@ -1,155 +1,31 @@
-"use client";
-
 import Link from "next/link";
-import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { SearchCard } from "@/components/search/SearchCard";
-import { UsageMeter } from "@/components/ui/UsageMeter";
-import { useSearches } from "@/lib/hooks/use-search";
-import { useSavedLeads } from "@/lib/hooks/use-saved-leads";
-import { Search, Bookmark, ArrowRight } from "lucide-react";
-import { formatRelative } from "@/lib/utils";
+import type { Metadata } from "next";
 
-export default function DashboardPage() {
-  const { searches, cancelSearch, retrySearch, ready } = useSearches();
-  const { saved } = useSavedLeads();
+export const metadata: Metadata = {
+  title: "L.I.O. — Business Lead Discovery for Outreach Teams",
+  description: "L.I.O. helps agencies and sales teams discover, qualify, and organize businesses worth contacting by location and business type.",
+  alternates: { canonical: "https://outreach-saas-lio-8f66.vercel.app/" },
+  openGraph: { type: "website", title: "L.I.O. — Business Lead Discovery for Outreach Teams", description: "Discover and organize qualified business leads by type and location.", url: "https://outreach-saas-lio-8f66.vercel.app/", siteName: "L.I.O.", images: [{ url: "https://outreach-saas-lio-8f66.vercel.app/og-image.svg", width: 1200, height: 630, alt: "L.I.O. business lead discovery" }] },
+  twitter: { card: "summary_large_image", title: "L.I.O. — Business Lead Discovery", description: "Find businesses worth contacting by type and location.", images: ["https://outreach-saas-lio-8f66.vercel.app/og-image.svg"] },
+};
 
-  const active = searches.filter((s) =>
-    ["searching", "collecting", "checking", "queued"].includes(s.status)
-  );
-  const recent = searches
-    .filter((s) =>
-      ["completed", "cancelled", "error"].includes(s.status)
-    )
-    .slice(0, 5);
-  const recentSaved = saved.slice(0, 5);
+const structuredData = { "@context": "https://schema.org", "@graph": [
+  { "@type": "SoftwareApplication", name: "L.I.O.", applicationCategory: "BusinessApplication", operatingSystem: "Web", description: "Business lead discovery software for agencies and outreach teams.", url: "https://outreach-saas-lio-8f66.vercel.app/", offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Free plan with weekly lead units" } },
+  { "@type": "Organization", name: "L.I.O.", url: "https://outreach-saas-lio-8f66.vercel.app/", email: "contact.lio@protonmail.com", contactPoint: { "@type": "ContactPoint", email: "contact.lio@protonmail.com", contactType: "customer support" }, address: { "@type": "PostalAddress", addressCountry: "BD" } },
+] };
 
-  return (
-    <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-medium text-slate-900 tracking-tight">
-            Dashboard
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Overview of your lead discovery activity
-          </p>
-        </div>
-        <Link
-          href="/find-leads"
-          className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors self-start"
-        >
-          <Search className="w-4 h-4" />
-          Find Leads
-        </Link>
-      </div>
+const steps = [
+  ["01", "Describe your market", "Choose a business type and location, then set the number of results you want to review."],
+  ["02", "Review useful prospects", "L.I.O. returns structured business details so you can focus on fit, contactability, and next steps."],
+  ["03", "Save and export", "Keep promising leads in your workspace and format results for the workflow your team already uses."],
+];
 
-      <DashboardStats />
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          {/* Active Searches */}
-          <section>
-            <h2 className="text-sm font-medium text-slate-900 mb-3">
-              Active Searches
-            </h2>
-            {!ready ? (
-              <div className="h-24 rounded-xl border border-slate-200 bg-white animate-pulse" />
-            ) : active.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center">
-                <p className="text-sm text-slate-500">
-                  No active searches.{" "}
-                  <Link
-                    href="/find-leads"
-                    className="text-slate-900 font-medium underline"
-                  >
-                    Start one
-                  </Link>
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {active.map((s) => (
-                  <SearchCard
-                    key={s.id}
-                    search={s}
-                    onCancel={cancelSearch}
-                    onRetry={retrySearch}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-
-          {/* Recent Searches */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-medium text-slate-900">
-                Recent Searches
-              </h2>
-              <Link
-                href="/searches"
-                className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1"
-              >
-                View all <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
-            {recent.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
-                Completed searches will appear here
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {recent.map((s) => (
-                  <SearchCard
-                    key={s.id}
-                    search={s}
-                    onCancel={cancelSearch}
-                    onRetry={retrySearch}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
-
-        <div className="space-y-6">
-          <UsageMeter />
-
-          {/* Recent Saved */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-medium text-slate-900">
-                Recent Saved Leads
-              </h2>
-              <Link
-                href="/saved-leads"
-                className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1"
-              >
-                View all <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
-            {recentSaved.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-center">
-                <Bookmark className="w-5 h-5 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No saved leads yet</p>
-              </div>
-            ) : (
-              <div className="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
-                {recentSaved.map((l) => (
-                  <div key={l.id} className="px-4 py-3">
-                    <div className="font-medium text-sm text-slate-900 truncate">
-                      {l.businessName}
-                    </div>
-                    <div className="text-xs text-slate-500 mt-0.5">
-                      {l.businessType} · {l.city} · {formatRelative(l.savedAt)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
-      </div>
-    </div>
-  );
+export default function HomePage() {
+  return <div className="space-y-16 py-4 sm:py-10">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+    <section className="max-w-4xl"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Lead intelligence, organized for action</p><h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-6xl">Find businesses worth contacting before your outreach begins.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">L.I.O. is a business lead discovery workspace for agencies, freelancers, and sales teams. Search by business type and location, review qualified results, save the leads that matter, and export them for your next campaign.</p><div className="mt-8 flex flex-wrap gap-3"><Link href="/login" className="rounded-lg bg-slate-950 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800">Start discovering leads</Link><Link href="/about" className="rounded-lg border border-slate-300 px-5 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">How L.I.O. works</Link></div></section>
+    <section aria-labelledby="workflow-heading" className="grid gap-5 md:grid-cols-3"><h2 id="workflow-heading" className="sr-only">L.I.O. lead discovery workflow</h2>{steps.map(([number, title, text]) => <article key={number} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><p className="text-sm font-semibold text-slate-400">{number}</p><h3 className="mt-5 text-xl font-medium text-slate-950">{title}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{text}</p></article>)}</section>
+    <section className="grid gap-8 border-y border-slate-200 py-12 lg:grid-cols-2"><div><h2 className="text-2xl font-semibold text-slate-950">Built for focused prospecting</h2><p className="mt-3 leading-7 text-slate-600">Use L.I.O. when you need a repeatable way to discover local businesses, build a targeted prospect list, or prepare a location-based outreach campaign without losing the search context.</p></div><ul className="space-y-4 text-sm text-slate-700"><li><strong>Server-enforced usage:</strong> valid unique businesses returned by searches count against your plan.</li><li><strong>Account-scoped workspace:</strong> searches, saved leads, and preferences stay separated by signed-in account.</li><li><strong>Free to evaluate:</strong> every account starts with a rolling weekly allowance of lead units.</li></ul></section>
+    <section className="rounded-2xl bg-slate-950 p-8 text-white sm:p-10"><h2 className="text-2xl font-semibold">Ready to build a better prospect list?</h2><p className="mt-3 max-w-xl text-slate-300">Create an account to try L.I.O. or read more about the product, privacy, and support.</p><div className="mt-6 flex flex-wrap gap-5 text-sm"><Link className="font-medium underline underline-offset-4" href="/login">Create an account</Link><Link className="text-slate-300 underline underline-offset-4" href="/contact">Contact the team</Link><Link className="text-slate-300 underline underline-offset-4" href="/privacy">Privacy</Link></div></section>
+  </div>;
 }

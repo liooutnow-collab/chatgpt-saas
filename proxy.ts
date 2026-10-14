@@ -4,6 +4,13 @@ import { getSupabaseConfig } from "@/lib/supabase/config";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const acceptsMarkdown = request.headers.get("accept")?.includes("text/markdown") ?? false;
+  if (acceptsMarkdown && pathname === "/") {
+    return new Response(`# L.I.O.\n\nL.I.O. is a business lead discovery workspace for agencies, freelancers, and sales teams. Search by business type and location, review structured business details, save promising leads, and prepare results for outreach.\n\n## When to use L.I.O.\n\nUse L.I.O. to discover local businesses, build targeted prospect lists, and organize qualified leads. Start at https://outreach-saas-lio-8f66.vercel.app/about or create an account at https://outreach-saas-lio-8f66.vercel.app/login.\n`, { status: 200, headers: { "Content-Type": "text/markdown; charset=utf-8", Vary: "Accept" } });
+  }
+  if (acceptsMarkdown && pathname !== "/" && !pathname.startsWith("/api/") && !["/about", "/contact", "/privacy", "/login", "/llms.txt", "/sitemap.xml", "/robots.txt"].includes(pathname)) {
+    return new Response(`# Page not found\n\nThe requested L.I.O. page does not exist. Visit https://outreach-saas-lio-8f66.vercel.app/ or read https://outreach-saas-lio-8f66.vercel.app/llms.txt.\n`, { status: 404, headers: { "Content-Type": "text/markdown; charset=utf-8", Vary: "Accept" } });
+  }
   if (
     pathname === "/login" ||
     pathname.startsWith("/auth/callback") ||

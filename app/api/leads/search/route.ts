@@ -16,6 +16,7 @@ type QuotaRow = {
   remaining_count: number;
 };
 type UsageRow = { remaining_count: number };
+type UsageDetailsRow = { period_expires_at?: string };
 type CachedSearchResponse = {
   provider: string;
   results: Lead[];
@@ -306,7 +307,7 @@ export async function POST(request: NextRequest) {
   }
 
   const providerLimit = Number(reservation.reserved_count);
-  if (!Number.isInteger(providerLimit) || providerLimit !== requestedCount) {
+  if (!Number.isInteger(providerLimit) || providerLimit < 5 || providerLimit > requestedCount) {
     await releaseReservation(supabase, requestId);
     return errorResponse("USAGE_UNAVAILABLE", "The discovery allowance reservation was invalid.", 503);
   }
@@ -350,6 +351,9 @@ export async function POST(request: NextRequest) {
       return errorResponse("USAGE_UNAVAILABLE", "The search finished, but usage could not be recorded. Its quota is temporarily held to prevent a retry from bypassing the limit; check usage and try again later.", 503);
     }
 
+    const { data: detailsData } = await supabase.rpc("get_discovery_usage_details");
+    const usageDetails = firstRow<UsageDetailsRow>(detailsData);
+
     return NextResponse.json(
       {
         provider: storedResponse.provider,
@@ -357,6 +361,7 @@ export async function POST(request: NextRequest) {
         meta: {
           ...storedResponse.meta,
           remaining: Number(settlement.remaining_count),
+          resetAt: usageDetails?.period_expires_at ?? null,
         },
       },
       { headers: { "Cache-Control": "no-store, max-age=0" } }

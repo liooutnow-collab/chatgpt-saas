@@ -23,7 +23,7 @@ import { searchManager } from "@/lib/search/search-manager";
 import { usageManager } from "@/lib/usage/usage-manager";
 
 const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/find-leads", label: "Find Leads", icon: Search },
   { href: "/searches", label: "Searches", icon: History },
   { href: "/saved-leads", label: "Saved Leads", icon: Bookmark },
@@ -73,7 +73,7 @@ export function Sidebar() {
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
-          <span className="text-sm font-medium text-slate-900">Lead Intelligence</span>
+          <span className="text-sm font-medium text-slate-900">L.I.O.</span>
         </div>
         <button
           onClick={() => setOpen(!open)}
@@ -98,14 +98,14 @@ export function Sidebar() {
             <Sparkles className="h-4.5 w-4.5 text-white" />
           </div>
           <div>
-            <div className="text-sm font-medium tracking-tight">Lead Intelligence</div>
+            <div className="text-sm font-medium tracking-tight">L.I.O.</div>
             <div className="text-[11px] text-slate-400">Free Plan</div>
           </div>
         </div>
 
         <nav className="flex-1 space-y-0.5 px-3 py-4">
           {NAV.map((item) => {
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             const Icon = item.icon;
             return (
               <Link
@@ -159,7 +159,7 @@ export function Sidebar() {
           </a>
           <div className="text-[11px] leading-relaxed text-slate-500">
             {email ? (
-              <>Server-side lead provider connected.<br />Lifetime usage is enforced per account.</>
+              <>Server-side lead provider connected.<br />Weekly usage is enforced per account.</>
             ) : (
               <>Sign in to start new searches.<br />Usage is enforced per account.</>
             )}

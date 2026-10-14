@@ -10,7 +10,7 @@ export default function SettingsPage() {
   const handleClearAll = () => {
     if (
       confirm(
-        "Clear local searches, results, saved leads, and preferences? Your account's server-side lifetime usage will not be reset."
+        "Clear local searches, results, saved leads, and preferences? Your account's server-side weekly usage will not be reset."
       )
     ) {
       storage.clearAll();
@@ -30,7 +30,7 @@ export default function SettingsPage() {
         <h2 className="text-sm font-medium text-slate-900">Usage</h2>
         <UsageMeter />
         <p className="text-xs leading-relaxed text-slate-500">
-          Your 100-discovery lifetime allowance is tied to your signed-in account and enforced by the server. Only valid businesses actually returned by a search consume discoveries. Clearing browser data does not reset this allowance.
+          Your plan allowance is tied to your signed-in account and enforced by the server. Only valid, unique businesses actually returned by a search consume lead units. Clearing browser data does not reset this allowance or change its server-side reset time.
         </p>
       </section>
 
@@ -53,7 +53,7 @@ export default function SettingsPage() {
         <ul className="list-inside list-disc space-y-1.5 text-sm text-slate-500">
           <li>Searches use the configured server-side lead provider.</li>
           <li>Choose 5, 10, 25, 50, or 100 results for each search.</li>
-          <li>One account receives up to 100 lifetime discoveries; only actual returned businesses count.</li>
+          <li>Your configured plan allowance resets on a rolling server-side schedule; only actual unique returned businesses count.</li>
           <li>Search history and saved leads are stored in this browser and isolated by signed-in account.</li>
           <li>Email/password authentication and quota enforcement are handled by Supabase.</li>
         </ul>

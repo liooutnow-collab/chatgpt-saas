@@ -106,7 +106,7 @@ export default function LoginPage() {
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-medium tracking-tight text-slate-900">Lead Intelligence</h1>
+            <h1 className="text-xl font-medium tracking-tight text-slate-900">L.I.O.</h1>
             <p className="text-sm text-slate-500">Sign in to manage your discoveries</p>
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-xs leading-relaxed text-slate-500">
-          Each account has a separate allowance of up to 100 lifetime discoveries. Only actual results returned count toward it.
+          Each account has a separate weekly allowance of lead units. Only actual unique businesses returned count toward it.
         </p>
       </section>
     </main>
