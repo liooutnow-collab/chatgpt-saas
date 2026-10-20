@@ -60,7 +60,7 @@ export default function FindLeadsPage() {
               <h2 className="text-sm font-medium text-slate-900 mb-3">
                 Current Searches
               </h2>
-              <div className="space-y-3">
+              <div className="motion-stagger space-y-3">
                 {active.map((s) => (
                   <SearchCard
                     key={s.id}
@@ -83,7 +83,7 @@ export default function FindLeadsPage() {
                 </Link>
               </div>
               <p className="mb-3 text-xs text-slate-500">Review partial results or retry a failed search.</p>
-              <div className="space-y-3">
+              <div className="motion-stagger space-y-3">
                 {needsReview.map((s) => (
                   <SearchCard key={s.id} search={s} onCancel={cancelSearch} onRetry={retrySearch} />
                 ))}

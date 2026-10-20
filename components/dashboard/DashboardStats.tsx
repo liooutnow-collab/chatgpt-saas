@@ -61,7 +61,7 @@ export function DashboardStats() {
         return (
           <div
             key={c.label}
-            className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5"
+            className="motion-card rounded-xl border border-slate-200 bg-white p-4 sm:p-5"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">

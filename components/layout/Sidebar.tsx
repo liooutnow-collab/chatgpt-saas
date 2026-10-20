@@ -77,7 +77,7 @@ export function Sidebar() {
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100"
+          className="motion-safe:transition-[transform,background-color] motion-safe:duration-200 motion-safe:active:scale-95 inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100"
           aria-label="Toggle menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -113,8 +113,8 @@ export function Sidebar() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                  active ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  "motion-safe:transition-[transform,background-color,color] motion-safe:duration-200 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium",
+                  active ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white motion-safe:hover:translate-x-0.5"
                 )}
               >
                 <Icon className="h-4.5 w-4.5 shrink-0" />
