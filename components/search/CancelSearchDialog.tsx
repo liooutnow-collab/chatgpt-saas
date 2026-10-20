@@ -1,6 +1,7 @@
 "use client";
 
 import { SearchJob } from "@/lib/providers/types";
+import { PRESS_FEEDBACK_CLASS } from "@/components/ui/press-feedback";
 
 interface Props {
   search: SearchJob;
@@ -38,13 +39,13 @@ export function CancelSearchDialog({ search, onConfirm, onCancel }: Props) {
         <div className="flex gap-3 justify-end">
           <button
             onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            className={`${PRESS_FEEDBACK_CLASS} rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50`}
           >
             Continue Search
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+            className={`${PRESS_FEEDBACK_CLASS} rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700`}
           >
             Cancel Search
           </button>

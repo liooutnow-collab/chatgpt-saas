@@ -2,6 +2,9 @@
 
 import { useUsage } from "@/lib/hooks/use-usage";
 import { cn } from "@/lib/utils";
+import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { PRESS_FEEDBACK_CLASS } from "@/components/ui/press-feedback";
 
 export function UsageMeter({ compact = false }: { compact?: boolean }) {
   const { usage, remaining, loading, error, refresh } = useUsage();
@@ -13,8 +16,8 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
 
   if (loading) {
     return (
-      <div className={compact ? "text-xs text-slate-500" : "rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-500"}>
-        Checking weekly usage…
+      <div className={compact ? "flex items-center gap-2 text-xs text-slate-500" : "rounded-xl border border-slate-200 bg-white p-4"} aria-label="Loading usage">
+        {compact ? <><Skeleton className="h-3 w-16" /><Skeleton className="h-3 w-10" /><Skeleton className="h-1.5 w-16 rounded-full" /></> : <><div className="mb-3 flex items-center justify-between"><Skeleton className="h-3 w-28" /><Skeleton className="h-4 w-20" /></div><Skeleton className="h-2 w-full rounded-full" /><Skeleton className="mt-3 h-3 w-48" /></>}
       </div>
     );
   }
@@ -27,7 +30,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
           type="button"
           onClick={() => void refresh()}
           disabled={loading}
-          className={compact ? "shrink-0 underline underline-offset-2" : "mt-2 block text-xs font-medium underline underline-offset-2"}
+          className={cn(PRESS_FEEDBACK_CLASS, compact ? "shrink-0 underline underline-offset-2" : "mt-2 block rounded px-1 text-xs font-medium underline underline-offset-2")}
         >
           Retry
         </button>
@@ -41,8 +44,8 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
         <span className="font-medium uppercase tracking-wide text-[10px] text-slate-700">
           {usage.planName}
         </span>
-        <span>{usage.used}/{usage.limit}</span>
-        {usage.reserved > 0 && <span className="text-slate-400">+{usage.reserved} held</span>}
+        <span><AnimatedNumber value={usage.used} />/<AnimatedNumber value={usage.limit} /></span>
+        {usage.reserved > 0 && <span className="text-slate-400">+<AnimatedNumber value={usage.reserved} /> held</span>}
         <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100">
           <div
             className={cn("h-full rounded-full transition-all", nearLimit ? "bg-amber-500" : "bg-slate-700")}
@@ -60,7 +63,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
           {usage.planName} · {usage.periodLabel} allowance
         </span>
         <span className={cn("text-sm font-medium", nearLimit ? "text-amber-600" : "text-slate-700")}>
-          {usage.used} / {usage.limit} used
+          <AnimatedNumber value={usage.used} /> / <AnimatedNumber value={usage.limit} /> used
         </span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-slate-100">
@@ -70,8 +73,8 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
         />
       </div>
       <p className="mt-2 text-xs text-slate-500">
-        {remaining} lead units remaining · resets {resetLabel}
-        {usage.reserved > 0 && ` · ${usage.reserved} reserved for in-progress searches`}
+        <AnimatedNumber value={remaining} /> lead units remaining · resets {resetLabel}
+        {usage.reserved > 0 && <> · <AnimatedNumber value={usage.reserved} /> reserved for in-progress searches</>}
       </p>
     </div>
   );

@@ -15,6 +15,8 @@ import {
   QUALIFICATION_STYLES,
 } from "@/lib/search-brief";
 import { Search, AlertCircle, ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { PRESS_FEEDBACK_CLASS } from "@/components/ui/press-feedback";
 import {
   DEFAULT_RESULT_COUNT,
   isAllowedResultCount,
@@ -40,7 +42,6 @@ export function SearchForm() {
     usage,
     loading: usageLoading,
     error: usageError,
-    refresh: refreshUsage,
   } = useUsage();
   const submitLock = useRef(false);
 
@@ -147,7 +148,7 @@ export function SearchForm() {
     return (
       <div className="space-y-5">
         <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
-          <button type="button" onClick={() => setBriefStep(false)} className="mb-5 inline-flex min-h-10 items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800">
+          <button type="button" onClick={() => setBriefStep(false)} className={`${PRESS_FEEDBACK_CLASS} mb-5 inline-flex min-h-10 items-center gap-1.5 rounded px-1 text-sm text-slate-500 hover:text-slate-800`}>
             <ArrowLeft className="h-4 w-4" /> Edit search inputs
           </button>
           <div className="mb-5">
@@ -191,7 +192,7 @@ export function SearchForm() {
               <label className="mb-1.5 block text-sm font-medium text-slate-700">How selective should the results be?</label>
               <div className="grid gap-2 sm:grid-cols-3">
                 {QUALIFICATION_STYLES.map((style) => (
-                  <button key={style.value} type="button" onClick={() => setPreferences((current) => ({ ...current, qualificationStyle: style.value as QualificationStyle }))} className={`min-h-16 rounded-lg border px-3 py-2 text-left transition-colors ${preferences.qualificationStyle === style.value ? "border-slate-300 bg-slate-50 text-slate-800 shadow-sm" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"}`}>
+                  <button key={style.value} type="button" onClick={() => setPreferences((current) => ({ ...current, qualificationStyle: style.value as QualificationStyle }))} className={`${PRESS_FEEDBACK_CLASS} min-h-16 rounded-lg border px-3 py-2 text-left ${preferences.qualificationStyle === style.value ? "border-slate-300 bg-slate-50 text-slate-800 shadow-sm" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"}`}>
                     <span className="block text-sm font-medium">{style.label}</span>
                     <span className="mt-0.5 block text-xs text-slate-500">{style.description}</span>
                   </button>
@@ -213,7 +214,7 @@ export function SearchForm() {
               <p className="mt-1 text-sm text-slate-700"><span className="font-medium text-slate-800">{effectiveType}</span> in <span className="font-medium text-slate-800">{location.trim()}</span> · {requestedLeads} results requested</p>
               <p className="mt-1 text-xs text-slate-500">{preferences.qualificationStyle || "Balanced"} · {currentPriorities.length ? currentPriorities.join(" · ") : "No priorities selected"}</p>
             </div>
-            <button type="button" onClick={handleFindLeads} disabled={submitting} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60">
+            <button type="button" onClick={handleFindLeads} disabled={submitting} className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60`}>
               <Search className="h-4 w-4" /> {submitting ? "Creating…" : "Find Leads"}
             </button>
           </div>
@@ -244,22 +245,12 @@ export function SearchForm() {
           <select id="result-count" required value={requestedLeads} onChange={(e) => { setRequestedLeads(Number(e.target.value)); setError(null); }} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10">
             {RESULT_COUNT_OPTIONS.map((count) => <option key={count} value={count}>{count} results</option>)}
           </select>
-          <p className="mt-2 text-xs text-slate-500">One search requests up to this many businesses; the provider may return fewer, and only valid unique businesses returned consume units. {usageLoading ? "Checking your weekly allowance…" : usageError ? usageError : `You have ${remaining} of ${usage.limit} lead units remaining. Your allowance resets ${usage.resetAt ? `on ${new Date(usage.resetAt).toLocaleString()}` : "soon"}.`}</p>
-          {usageError && (
-            <button
-              type="button"
-              onClick={() => void refreshUsage()}
-              disabled={usageLoading}
-              className="mt-2 inline-flex min-h-8 items-center text-xs font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Retry allowance check
-            </button>
-          )}
+          <p className="mt-2 text-xs text-slate-500">One search requests up to this many businesses; the provider may return fewer, and only valid unique businesses returned consume units. {usageLoading ? <span className="inline-flex align-middle"><Skeleton className="ml-1 h-3 w-36" /></span> : usageError ? <span className="text-amber-700">Allowance check unavailable. Use Retry in the usage panel.</span> : `You have ${remaining} of ${usage.limit} lead units remaining. Your allowance resets ${usage.resetAt ? `on ${new Date(usage.resetAt).toLocaleString()}` : "soon"}.`}</p>
         </div>
 
         {error && <div role="alert" className="flex items-start gap-2.5 rounded-lg border border-amber-100 bg-amber-50 p-3"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" /><p className="text-sm text-amber-800">{error}</p></div>}
 
-        <button type="submit" className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-slate-900 text-sm font-medium text-white transition-colors hover:bg-slate-800"><ArrowRight className="h-4 w-4" /> Continue</button>
+        <button type="submit" className={`${PRESS_FEEDBACK_CLASS} inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-slate-900 text-sm font-medium text-white hover:bg-slate-800`}><ArrowRight className="h-4 w-4" /> Continue</button>
       </div>
     </form>
   );

@@ -1,0 +1,1 @@
+export const PRESS_FEEDBACK_CLASS = "transition-[transform,background-color,border-color,box-shadow,opacity] duration-200 active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100";

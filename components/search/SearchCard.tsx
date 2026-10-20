@@ -9,6 +9,7 @@ import { SearchProgress } from "./SearchProgress";
 import { CancelSearchDialog } from "./CancelSearchDialog";
 import { formatRelative, pluralizeBusinessType } from "@/lib/utils";
 import { X, Eye, RotateCcw, MapPin } from "lucide-react";
+import { PRESS_FEEDBACK_CLASS } from "@/components/ui/press-feedback";
 
 interface Props {
   search: SearchJob;
@@ -68,7 +69,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
           {isActive && (
             <button
               onClick={() => setShowCancel(true)}
-              className="inline-flex min-h-10 items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50`}
             >
               <X className="w-3.5 h-3.5" />
               Cancel Search
@@ -78,7 +79,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
           {canView && (
             <Link
               href={`/searches/${search.id}`}
-              className="inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
+              className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50`}
             >
               <Eye className="w-3.5 h-3.5" />
               View Results
@@ -99,7 +100,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
                 else setRetrying(false);
               }}
               aria-label={retrying ? "Retrying search" : "Retry search"}
-              className="inline-flex min-h-10 shrink-0 items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:cursor-wait disabled:opacity-60"
+              className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-wait disabled:opacity-60`}
             >
               <RotateCcw className="w-3.5 h-3.5" />
               {retrying ? "Retrying…" : "Retry"}
