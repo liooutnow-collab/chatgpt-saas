@@ -39,7 +39,7 @@ export function LeadCard({ lead, searchId }: Props) {
           if ((event.target as HTMLElement).closest("a, button")) return;
           setDetailsOpen(true);
         }}
-        className="cursor-pointer space-y-3 rounded-xl border border-slate-200 bg-white p-4"
+        className="motion-card cursor-pointer space-y-3 rounded-xl border border-slate-200 bg-white p-4"
       >
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">

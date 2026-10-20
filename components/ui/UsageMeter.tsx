@@ -16,7 +16,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
 
   if (loading) {
     return (
-      <div className={compact ? "flex items-center gap-2 text-xs text-slate-500" : "rounded-xl border border-slate-200 bg-white p-4"} aria-label="Loading usage">
+      <div className={compact ? "flex items-center gap-2 text-xs text-slate-500" : "motion-card rounded-xl border border-slate-200 bg-white p-4"} aria-label="Loading usage">
         {compact ? <><Skeleton className="h-3 w-16" /><Skeleton className="h-3 w-10" /><Skeleton className="h-1.5 w-16 rounded-full" /></> : <><div className="mb-3 flex items-center justify-between"><Skeleton className="h-3 w-28" /><Skeleton className="h-4 w-20" /></div><Skeleton className="h-2 w-full rounded-full" /><Skeleton className="mt-3 h-3 w-48" /></>}
       </div>
     );
@@ -24,7 +24,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
 
   if (error) {
     return (
-      <div className={compact ? "flex items-center gap-2 text-xs text-amber-700" : "rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"} role="status">
+      <div className={compact ? "flex items-center gap-2 text-xs text-amber-700" : "motion-card rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"} role="status">
         <span>{error}</span>
         <button
           type="button"
@@ -57,7 +57,7 @@ export function UsageMeter({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className="motion-card rounded-xl border border-slate-200 bg-white p-4">
       <div className="mb-2 flex items-center justify-between gap-3">
         <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
           {usage.planName} · {usage.periodLabel} allowance

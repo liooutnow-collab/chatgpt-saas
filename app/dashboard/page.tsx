@@ -67,7 +67,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="motion-stagger space-y-3">
                 {active.map((s) => (
                   <SearchCard
                     key={s.id}
@@ -98,7 +98,7 @@ export default function DashboardPage() {
                 Completed searches will appear here
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="motion-stagger space-y-3">
                 {recent.map((s) => (
                   <SearchCard
                     key={s.id}
@@ -134,7 +134,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-500">No saved leads yet</p>
               </div>
             ) : (
-              <div className="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
+              <div className="motion-stagger rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
                 {recentSaved.map((l) => (
                   <div key={l.id} className="px-4 py-3">
                     <div className="font-medium text-sm text-slate-900 truncate">

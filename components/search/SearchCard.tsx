@@ -36,7 +36,7 @@ export function SearchCard({ search, onCancel, onRetry }: Props) {
 
   return (
     <>
-      <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 hover:border-slate-300 transition-colors">
+      <div className="motion-card rounded-xl border border-slate-200 bg-white p-4 sm:p-5 hover:border-slate-300">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="min-w-0">
             <h3 className="font-medium text-slate-900 truncate">
