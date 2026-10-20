@@ -2,6 +2,7 @@
 
 import { SearchJob } from "@/lib/providers/types";
 import { cn } from "@/lib/utils";
+import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 
 export function SearchProgress({ search }: { search: SearchJob }) {
   const isActive = ["searching", "collecting", "checking"].includes(
@@ -14,8 +15,8 @@ export function SearchProgress({ search }: { search: SearchJob }) {
       <div className="flex items-center justify-between text-sm">
         <span className="text-slate-600">{search.statusMessage}</span>
         <span className="flex items-center gap-2 font-medium text-slate-800 tabular-nums">
-          <span>{search.processedLeads} / {search.requestedLeads} found</span>
-          <span className="text-xs font-normal text-slate-500">{Math.round(search.progress)}%</span>
+          <span><AnimatedNumber value={search.processedLeads} /> / <AnimatedNumber value={search.requestedLeads} /> found</span>
+          <span className="text-xs font-normal text-slate-500"><AnimatedNumber value={Math.round(search.progress)} />%</span>
         </span>
       </div>
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
