@@ -31,7 +31,7 @@ export default function SavedLeadsPage() {
           title="No saved leads"
           description="When you find promising businesses, save them here for later outreach."
           action={
-            <Link href="/find-leads" className="inline-flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white hover:bg-slate-800">
+            <Link href="/find-leads" className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-700">
               Find Leads
             </Link>
           }

@@ -70,7 +70,7 @@ export function Sidebar() {
     <>
       <div className="fixed left-0 right-0 top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white px-4 lg:hidden">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
           <span className="text-sm font-medium text-slate-900">L.I.O.</span>
@@ -114,7 +114,7 @@ export function Sidebar() {
                 onClick={() => setOpen(false)}
                 className={cn(
                   "motion-safe:transition-[transform,background-color,color] motion-safe:duration-200 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium",
-                  active ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white motion-safe:hover:translate-x-0.5"
+                  active ? "bg-indigo-500/20 text-indigo-100" : "text-slate-400 hover:bg-white/5 hover:text-white motion-safe:hover:translate-x-0.5"
                 )}
               >
                 <Icon className="h-4.5 w-4.5 shrink-0" />

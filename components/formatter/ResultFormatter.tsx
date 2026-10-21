@@ -119,7 +119,7 @@ export function ResultFormatter({ searchId, businessType, location, leads }: Pro
               key={name}
               type="button"
               onClick={() => applyPreset(name as FormatterPreset)}
-              className={`min-h-10 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${preset === name ? "border-slate-900 bg-slate-900 text-white" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}`}
+              className={`min-h-10 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${preset === name ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}`}
             >
               {name}
             </button>
@@ -158,7 +158,7 @@ export function ResultFormatter({ searchId, businessType, location, leads }: Pro
             <button type="button" disabled={selectedFields.length === 0 || uniqueLeads.length === 0} onClick={downloadCsv} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
               <Download className="h-4 w-4" /> Export CSV
             </button>
-            <button type="button" disabled={selectedFields.length === 0 || uniqueLeads.length === 0} onClick={downloadXlsx} className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50">
+            <button type="button" disabled={selectedFields.length === 0 || uniqueLeads.length === 0} onClick={downloadXlsx} className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50">
               <FileSpreadsheet className="h-4 w-4" /> Export Excel
             </button>
           </div>
