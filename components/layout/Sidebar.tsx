@@ -21,6 +21,7 @@ import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { searchManager } from "@/lib/search/search-manager";
 import { usageManager } from "@/lib/usage/usage-manager";
+import { useUsage } from "@/lib/hooks/use-usage";
 
 const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -36,6 +37,7 @@ export function Sidebar() {
   const [email, setEmail] = useState<string | null>(null);
   const [signingOut, setSigningOut] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const { usage } = useUsage();
 
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
@@ -99,7 +101,7 @@ export function Sidebar() {
           </div>
           <div>
             <div className="text-sm font-medium tracking-tight">L.I.O.</div>
-            <div className="text-[11px] text-slate-400">Free Plan</div>
+            <div className="text-[11px] text-slate-400">{usage.loading ? "Plan" : usage.planName}</div>
           </div>
         </div>
 

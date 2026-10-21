@@ -7,7 +7,7 @@ type UsageResponse = {
   reserved: number;
   remaining: number;
   limit: number;
-  plan: "free" | "pro";
+  plan: "free" | "pro" | "internal";
   planName: string;
   periodLabel: string;
   resetAt: string;
@@ -94,7 +94,7 @@ class UsageManager {
           !Number.isInteger(data.reserved) ||
           !Number.isInteger(data.remaining) ||
           !Number.isInteger(data.limit) || data.limit <= 0 ||
-          !["free", "pro"].includes(data.plan) ||
+          !["free", "pro", "internal"].includes(data.plan) ||
           typeof data.planName !== "string" ||
           typeof data.periodLabel !== "string" ||
           !data.resetAt || Number.isNaN(Date.parse(data.resetAt))

@@ -27,7 +27,7 @@ function makeLead(
   rating: number | null = null,
   reviews: number | null = null
 ): Lead {
-  const loc = CITIES[city] || CITIES.Dhaka;
+  const loc = CITIES[city] || CITIES.London;
   const hasWebsite = !!website;
   const hasPhone = !!phone;
   let websiteQuality: Lead["websiteQuality"] = "unknown";

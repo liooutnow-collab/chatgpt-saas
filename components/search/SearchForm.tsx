@@ -47,7 +47,7 @@ export function SearchForm() {
 
   const [businessType, setBusinessType] = useState("");
   const [customType, setCustomType] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("London");
   const [requestedLeads, setRequestedLeads] = useState<number>(DEFAULT_RESULT_COUNT);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);

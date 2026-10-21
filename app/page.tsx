@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const structuredData = { "@context": "https://schema.org", "@graph": [
   { "@type": "SoftwareApplication", name: "L.I.O.", applicationCategory: "BusinessApplication", operatingSystem: "Web", description: "Business lead discovery software for agencies and outreach teams.", url: "https://outreach-saas-lio-8f66.vercel.app/", offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Free plan with weekly lead units" } },
-  { "@type": "Organization", name: "L.I.O.", url: "https://outreach-saas-lio-8f66.vercel.app/", email: "contact.lio@protonmail.com", contactPoint: { "@type": "ContactPoint", email: "contact.lio@protonmail.com", contactType: "customer support" }, address: { "@type": "PostalAddress", addressCountry: "BD" } },
+  { "@type": "Organization", name: "L.I.O.", url: "https://outreach-saas-lio-8f66.vercel.app/", email: "contact.lio@protonmail.com", contactPoint: { "@type": "ContactPoint", email: "contact.lio@protonmail.com", contactType: "customer support" }, address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" } },
 ] };
 
 const steps = [

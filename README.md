@@ -117,6 +117,14 @@ Use `bg-brand`, `bg-brand-hover`, `text-brand-soft`, `border-brand`, `focus:bord
 
 ---
 
+## Internal testing access
+
+Internal Premium access is server-enforced through `private.internal_entitlements` in Supabase. The table has no client grants, the browser cannot submit a plan or quota override, and access fails closed to the normal plan when an entitlement is missing or expired. Provisioning and revocation are available only through service-role-only database functions; keep those operations out of client code and never expose the service-role key to Vercel browser bundles.
+
+The default and mock-provider fallback search location is London, United Kingdom. Users may still enter another location for a specific search.
+
+---
+
 ## Getting Started
 
 ```bash
