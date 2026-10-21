@@ -170,7 +170,7 @@ export function SearchForm() {
           <div className="space-y-5">
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700">{getBriefGoalPrompt(effectiveType)}</label>
-              <select value={preferences.goal || ""} onChange={(e) => setPreferences((current) => ({ ...current, goal: e.target.value || undefined }))} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+              <select value={preferences.goal || ""} onChange={(e) => setPreferences((current) => ({ ...current, goal: e.target.value || undefined }))} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20">
                 <option value="">Skip for now</option>
                 {BRIEF_GOALS.map((goal) => <option key={goal} value={goal}>{goal}</option>)}
               </select>
@@ -202,7 +202,7 @@ export function SearchForm() {
 
             <div>
               <label htmlFor="additional-instruction" className="mb-1.5 block text-sm font-medium text-slate-700">Anything specific you&apos;re looking for? <span className="font-normal text-slate-400">Optional</span></label>
-              <textarea id="additional-instruction" value={preferences.additionalInstruction || ""} onChange={(e) => setPreferences((current) => ({ ...current, additionalInstruction: e.target.value }))} maxLength={1000} rows={3} placeholder="For example: prioritize established businesses with clear contact details." className="w-full resize-y rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20" />
+              <textarea id="additional-instruction" value={preferences.additionalInstruction || ""} onChange={(e) => setPreferences((current) => ({ ...current, additionalInstruction: e.target.value }))} maxLength={1000} rows={3} placeholder="For example: prioritize established businesses with clear contact details." className="w-full resize-y rounded-lg border border-slate-200 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ export function SearchForm() {
               <p className="mt-1 text-sm text-slate-700"><span className="font-medium text-slate-800">{effectiveType}</span> in <span className="font-medium text-slate-800">{location.trim()}</span> · {requestedLeads} results requested</p>
               <p className="mt-1 text-xs text-slate-500">{preferences.qualificationStyle || "Balanced"} · {currentPriorities.length ? currentPriorities.join(" · ") : "No priorities selected"}</p>
             </div>
-            <button type="button" onClick={handleFindLeads} disabled={submitting} className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60`}>
+            <button type="button" onClick={handleFindLeads} disabled={submitting} className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-brand px-4 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60`}>
               <Search className="h-4 w-4" /> {submitting ? "Creating…" : "Find Leads"}
             </button>
           </div>
@@ -228,21 +228,21 @@ export function SearchForm() {
       <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 space-y-5">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-700">Business Type</label>
-          <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+          <select required value={businessType} onChange={(e) => setBusinessType(e.target.value)} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20">
             <option value="">Choose a business type</option>
             {BUSINESS_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}
           </select>
-          {businessType === "Custom" && <input required type="text" value={customType} onChange={(e) => setCustomType(e.target.value)} placeholder="Enter a custom business type" className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20" />}
+          {businessType === "Custom" && <input required type="text" value={customType} onChange={(e) => setCustomType(e.target.value)} placeholder="Enter a custom business type" className="mt-2 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />}
         </div>
 
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-700">Location</label>
-          <input required type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, country or region" className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20" />
+          <input required type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, country or region" className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
         </div>
 
         <div>
           <label htmlFor="result-count" className="mb-1.5 block text-sm font-medium text-slate-700">Results per search</label>
-          <select id="result-count" required value={requestedLeads} onChange={(e) => { setRequestedLeads(Number(e.target.value)); setError(null); }} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600/20">
+          <select id="result-count" required value={requestedLeads} onChange={(e) => { setRequestedLeads(Number(e.target.value)); setError(null); }} className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20">
             {RESULT_COUNT_OPTIONS.map((count) => <option key={count} value={count}>{count} results</option>)}
           </select>
           <p className="mt-2 text-xs text-slate-500">One search requests up to this many businesses; the provider may return fewer, and only valid unique businesses returned consume units. {usageLoading ? <span className="inline-flex align-middle"><Skeleton className="ml-1 h-3 w-36" /></span> : usageError ? <span className="text-amber-700">Allowance check unavailable. Use Retry in the usage panel.</span> : `You have ${remaining} of ${usage.limit} lead units remaining. Your allowance resets ${usage.resetAt ? `on ${new Date(usage.resetAt).toLocaleString()}` : "soon"}.`}</p>
@@ -250,7 +250,7 @@ export function SearchForm() {
 
         {error && <div role="alert" className="flex items-start gap-2.5 rounded-lg border border-amber-100 bg-amber-50 p-3"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" /><p className="text-sm text-amber-800">{error}</p></div>}
 
-        <button type="submit" className={`${PRESS_FEEDBACK_CLASS} inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 text-sm font-medium text-white hover:bg-indigo-700`}><ArrowRight className="h-4 w-4" /> Continue</button>
+        <button type="submit" className={`${PRESS_FEEDBACK_CLASS} inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-brand text-sm font-medium text-white hover:bg-brand-hover`}><ArrowRight className="h-4 w-4" /> Continue</button>
       </div>
     </form>
   );

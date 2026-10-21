@@ -102,6 +102,21 @@ This separation is intentional so a future Supabase migration stays straightforw
 
 ---
 
+## Brand System
+
+L.I.O. uses a light slate foundation with a permanent indigo primary accent. The source of truth is the semantic token set in `app/globals.css`; UI code should use `brand` utilities rather than hardcoding a different primary color.
+
+- Primary: `#4F46E5`
+- Primary hover: `#4338CA`
+- Primary soft: `#E0E7FF`
+- Primary surface: `#EEF2FF`
+- Primary border: `#C7D2FE`
+- Success: `#059669`
+
+Use `bg-brand`, `bg-brand-hover`, `text-brand-soft`, `border-brand`, `focus:border-brand`, and `ring-brand/20` for brand interactions. Keep slate for neutral structure and emerald for success states. This prevents later UI changes from silently reverting the product to the old slate-only primary treatment.
+
+---
+
 ## Getting Started
 
 ```bash

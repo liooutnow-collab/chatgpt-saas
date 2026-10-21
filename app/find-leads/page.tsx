@@ -72,7 +72,7 @@ export default function FindLeadsPage() {
               </div>
             </div>
           ) : needsReview.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-200 bg-white"><EmptyState icon={Search} title="No searches in progress" description="Choose a business type and location to start building your next prospect list." action={<Link href="#search-form" className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-10 items-center rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white`}>Start a search</Link>} /></div>
+            <div className="rounded-xl border border-dashed border-slate-200 bg-white"><EmptyState icon={Search} title="No searches in progress" description="Choose a business type and location to start building your next prospect list." action={<Link href="#search-form" className={`${PRESS_FEEDBACK_CLASS} inline-flex min-h-10 items-center rounded-lg bg-brand px-4 text-sm font-medium text-white`}>Start a search</Link>} /></div>
           ) : null}
           {needsReview.length > 0 && (
             <section>

@@ -102,7 +102,7 @@ export default function LoginPage() {
     <main className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4 py-10 sm:min-h-screen">
       <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-7 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-white">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
@@ -144,7 +144,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-600/20"
+              className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
             />
           </div>
           <div>
@@ -157,7 +157,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-600/20"
+              className="h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
             />
             {mode === "sign-up" && <p className="mt-1 text-xs text-slate-500">Use at least 8 characters.</p>}
           </div>
@@ -173,7 +173,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={busy || !isSupabaseConfigured()}
-            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-brand px-4 text-sm font-medium text-white transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-50"
           >
             <LockKeyhole className="h-4 w-4" />
             {busy ? "Please wait…" : mode === "sign-in" ? "Sign in" : "Create account"}

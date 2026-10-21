@@ -221,7 +221,7 @@ export function LeadTable({ leads, searchId, mode = "results" }: Props) {
           ) : (
             <>
               {unsavedSelected.length > 0 && (
-                <button type="button" onClick={bulkSave} className="inline-flex min-h-9 items-center rounded-md bg-indigo-600 px-3 text-xs font-medium text-white hover:bg-indigo-700">
+                <button type="button" onClick={bulkSave} className="inline-flex min-h-9 items-center rounded-md bg-brand px-3 text-xs font-medium text-white hover:bg-brand-hover">
                   Save selected
                 </button>
               )}

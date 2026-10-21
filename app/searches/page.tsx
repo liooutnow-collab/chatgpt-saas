@@ -58,7 +58,7 @@ export default function SearchesPage() {
         </div>
         <Link
           href="/find-leads"
-          className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors self-start"
+          className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-brand text-white text-sm font-medium hover:bg-brand-hover transition-colors self-start"
         >
           New Search
         </Link>
@@ -81,7 +81,7 @@ export default function SearchesPage() {
           action={
             <Link
               href="/find-leads"
-              className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700"
+              className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-brand text-white text-sm font-medium hover:bg-brand-hover"
             >
               Find Leads
             </Link>

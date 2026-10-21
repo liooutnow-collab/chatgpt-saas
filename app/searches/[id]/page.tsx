@@ -124,7 +124,7 @@ export default function SearchDetailPage({
                   else setRetrying(false);
                 }}
                 aria-label={retrying ? "Retrying search" : "Retry search"}
-                className="inline-flex min-h-10 shrink-0 items-center gap-1.5 h-10 px-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:cursor-wait disabled:opacity-60"
+                className="inline-flex min-h-10 shrink-0 items-center gap-1.5 h-10 px-3 text-sm font-medium text-white bg-brand rounded-lg hover:bg-brand-hover disabled:cursor-wait disabled:opacity-60"
               >
                 <RotateCcw className="w-4 h-4" />
                 {retrying ? "Retrying…" : "Retry"}

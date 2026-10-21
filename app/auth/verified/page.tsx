@@ -19,7 +19,7 @@ export default function EmailVerifiedPage() {
         </p>
         <Link
           href="/login"
-          className="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+          className="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-brand px-4 text-sm font-medium text-white transition-colors hover:bg-brand-hover"
         >
           Continue to L.I.O.
         </Link>
