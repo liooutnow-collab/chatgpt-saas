@@ -344,6 +344,10 @@ export async function POST(request: NextRequest) {
     }
 
     const results = publicizeResults(validUniqueResults(result.leads, providerLimit));
+    if (results.length === 0) {
+      await releaseReservation(supabase, requestId);
+      return errorResponse("PROVIDER_EMPTY_RESULT", "No businesses were found for this search. Try a broader location or business type.", 404);
+    }
     const storedResponse: CachedSearchResponse = {
       provider: PUBLIC_DATA_SOURCE_LABEL,
       results,
