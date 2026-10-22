@@ -113,3 +113,14 @@ The browser authenticates through Supabase SSR cookies. The lead-search route re
 - No production load test, backup/restore test, or third-party provider contract/license review was run.
 
 This report intentionally distinguishes repository evidence from assumptions and does not claim full security, legal compliance, or production readiness.
+
+## Remediation completed in this pass
+
+- Added `supabase/migrations/20261022143000_guard_zero_settlements.sql`, which rejects `p_actual_count < 1` through the authenticated settlement wrapper. The lead-search route now releases empty-result reservations explicitly before returning a user-safe no-results response.
+- Added baseline security headers globally in `next.config.ts`: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and `Permissions-Policy`.
+- Verification: `npm run lint` passed; `npm run build` passed; targeted assertions confirmed the SQL guard and header declarations; a local runtime `curl` confirmed all four headers; a production `curl` against `https://outreach-saas-lio-8f66.vercel.app/` confirmed all four headers.
+- Deployment: Vercel production deployment `dpl_9eYxgMCbLwzRjkwowVNKtV17b7Rj` reached `READY` for commit `f57f785`.
+
+## Important remaining activation step
+
+The new SQL migration is committed and deployed with the application, but this sandbox has no Supabase CLI or management/service-role connection, so the migration was not applied directly to the Supabase project during this pass. The quota guard is therefore verified in source and build/runtime checks but remains **pending database migration application** in the actual Supabase project. Until that migration is applied, treat the quota-settlement bypass as unresolved in production. The current Vercel project also has no server-only Supabase service-role key, so the stronger service-attested settlement design remains a future hardening task.
