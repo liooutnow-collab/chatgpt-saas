@@ -123,11 +123,17 @@ This report intentionally distinguishes repository evidence from assumptions and
 
 ## Important remaining activation step
 
-The new SQL migration is committed and deployed with the application, but this sandbox has no Supabase CLI or management/service-role connection, so the migration was not applied directly to the Supabase project during this pass. The quota guard is therefore verified in source and build/runtime checks but remains **pending database migration application** in the actual Supabase project. Until that migration is applied, treat the quota-settlement bypass as unresolved in production. The current Vercel project also has no server-only Supabase service-role key, so the stronger service-attested settlement design remains a future hardening task.
+At the time of the initial report, the SQL migrations were pending application. They have now been applied to Supabase project `amfmbbgrhaffdpsdmopv`: `guard_zero_settlements`, `discovery_rate_limit`, and the follow-up `revoke_legacy_settlement` migration. The database verification confirmed the legacy two-argument settlement overload is not executable by `authenticated`, the guarded three-argument overload remains executable, and the reservation rate-limit trigger is enabled. A safe zero-count call was rejected with `zero_settlement_not_allowed`. The current Vercel project still has no server-only Supabase service-role key, so the stronger service-attested settlement design remains a future hardening task.
 
 ## Next remediation section: abuse and resource-exhaustion control
 
 - Added `supabase/migrations/20261022150000_discovery_rate_limit.sql`.
 - The migration creates a private per-user one-minute counter and a trigger on reservation creation/reuse. It caps reservation attempts at 30 per minute and applies to direct authenticated RPC attempts as well as the Next.js route.
 - Verification: lint and production build passed; targeted assertions confirmed the private counter, trigger, cap, and `discovery_rate_limit_exceeded` failure path.
-- This control is also **pending database migration application** in the live Supabase project. No live load test was run.
+- This control is active in the live Supabase project. No live load test was run.
+
+## Deployment verification after database activation
+
+- Vercel production deployment `dpl_9XwyiPnLjg3tic5dA2p39JG1FcPX` reached `READY` for commit `0ede445`.
+- Live production headers were rechecked after deployment and remain present.
+- Supabase security advisors still report the existing leaked-password-protection warning and informational RLS-without-policy notices on private tables. The private tables have client grants revoked; the advisor notices should be reviewed separately.
