@@ -1,4 +1,5 @@
 import { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 
 export type FormatterFieldId =
   | "businessName"
@@ -46,8 +47,8 @@ export const FORMATTER_FIELDS: FormatterField[] = [
   { id: "rating", label: "Rating", category: "Business Information", getValue: (lead) => lead.rating },
   { id: "reviewCount", label: "Review Count", category: "Business Information", getValue: (lead) => lead.reviewCount },
   { id: "websiteQuality", label: "Website Quality", category: "Business Information", getValue: (lead) => lead.websiteQuality },
-  { id: "source", label: "Source", category: "Source", description: "The provider that supplied the lead.", getValue: (lead) => lead.source },
-  { id: "sourceId", label: "Source ID", category: "Source", description: "The provider's lead reference.", getValue: (lead) => lead.sourceId },
+  { id: "source", label: "Source", category: "Source", description: "The directory that supplied the lead.", getValue: () => PUBLIC_DATA_SOURCE_LABEL },
+  { id: "sourceId", label: "Directory ID", category: "Source", description: "The lead reference used by L.I.O.", getValue: (lead) => lead.sourceId },
 ];
 
 export const FORMATTER_PRESETS = {

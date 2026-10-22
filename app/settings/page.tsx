@@ -51,7 +51,7 @@ export default function SettingsPage() {
       <section className="space-y-2 rounded-xl border border-slate-200 bg-white p-5">
         <h2 className="text-sm font-medium text-slate-900">About lead discovery</h2>
         <ul className="list-inside list-disc space-y-1.5 text-sm text-slate-500">
-          <li>Searches use the configured server-side lead provider.</li>
+          <li>Searches use the configured server-side business directory.</li>
           <li>Choose 5, 10, 25, 50, or 100 results for each search.</li>
           <li>Your configured plan allowance resets on a rolling server-side schedule; only actual unique returned businesses count.</li>
           <li>Search history and saved leads are stored in this browser and isolated by signed-in account.</li>

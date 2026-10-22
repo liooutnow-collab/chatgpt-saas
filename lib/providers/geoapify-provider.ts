@@ -3,6 +3,7 @@ import {
   LeadProvider,
   LeadProviderSearchParams,
 } from "./types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "./public";
 
 const GEOAPIFY_GEOCODE_URL = "https://api.geoapify.com/v1/geocode/search";
 const GEOAPIFY_PLACES_URL = "https://api.geoapify.com/v2/places";
@@ -168,7 +169,7 @@ function normalizeLead(
     address: address ?? "",
     city: city ?? "",
     country: country ?? "",
-    source: "Geoapify",
+    source: PUBLIC_DATA_SOURCE_LABEL,
     sourceId: sourceId ?? `geoapify_${latitude}_${longitude}`,
     latitude,
     longitude,
@@ -230,7 +231,7 @@ async function fetchJson<T>(url: URL, signal?: AbortSignal): Promise<T> {
 
 export class GeoapifyProvider implements LeadProvider {
   getName(): string {
-    return "Geoapify";
+    return PUBLIC_DATA_SOURCE_LABEL;
   }
 
   async search(params: LeadProviderSearchParams, signal?: AbortSignal): Promise<Lead[]> {

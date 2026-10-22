@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 import { useSavedLeads } from "@/lib/hooks/use-saved-leads";
 import {
   ArrowUpRight,
@@ -105,7 +106,7 @@ export function LeadRow({ lead, searchId, mode, savedAt, visibleColumns, selecte
           </div>
         );
       case "source":
-        return <span className="whitespace-nowrap text-slate-500">{lead.source}</span>;
+        return <span className="whitespace-nowrap text-slate-500">{PUBLIC_DATA_SOURCE_LABEL}</span>;
       case "savedAt":
         return <span className="whitespace-nowrap text-slate-500">{savedAt ? formatRelative(savedAt) : "—"}</span>;
       case "action":

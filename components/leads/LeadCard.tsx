@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 import { useSavedLeads } from "@/lib/hooks/use-saved-leads";
 import {
   ArrowUpRight,
@@ -159,7 +160,7 @@ export function LeadCard({ lead, searchId }: Props) {
           )}
         </div>
 
-        <div className="text-[11px] text-slate-400">Source: {lead.source}</div>
+        <div className="text-[11px] text-slate-400">Source: {PUBLIC_DATA_SOURCE_LABEL}</div>
       </article>
       {detailsOpen && <LeadDetailsDialog lead={lead} onClose={() => setDetailsOpen(false)} />}
     </>

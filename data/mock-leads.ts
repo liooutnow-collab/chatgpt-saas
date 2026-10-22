@@ -1,4 +1,5 @@
 import { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 
 /**
  * Fictional businesses for demo purposes.
@@ -43,7 +44,7 @@ function makeLead(
     address,
     city,
     country: loc.country,
-    source: "Mock Business Directory",
+    source: PUBLIC_DATA_SOURCE_LABEL,
     sourceId: `mock_${id}`,
     latitude: loc.lat + (Math.random() - 0.5) * 0.05,
     longitude: loc.lng + (Math.random() - 0.5) * 0.05,

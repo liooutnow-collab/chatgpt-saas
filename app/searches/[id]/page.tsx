@@ -8,6 +8,7 @@ import { useSearches } from "@/lib/hooks/use-search";
 import { SearchProgress } from "@/components/search/SearchProgress";
 import { SearchStatusBadge } from "@/components/ui/SearchStatusBadge";
 import { LeadTable } from "@/components/leads/LeadTable";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 import { CancelSearchDialog } from "@/components/search/CancelSearchDialog";
 import { formatDate, pluralizeBusinessType } from "@/lib/utils";
 import { summarizeBrief } from "@/lib/search-brief";
@@ -180,7 +181,7 @@ export default function SearchDetailPage({
             <h2 className="font-medium text-red-700">Search Failed</h2>
             <p className="text-sm text-slate-500 mt-0.5">
               {search.errorMessage ||
-                "The lead provider could not complete this search."}
+                "The business directory could not complete this search."}
             </p>
           </div>
         )}
@@ -228,7 +229,7 @@ export default function SearchDetailPage({
               </span>
             </h2>
             <p className="text-[11px] text-slate-400">
-              {search.provider || leads[0]?.source || "Lead provider"} results
+              {PUBLIC_DATA_SOURCE_LABEL} results
             </p>
           </div>
           <LeadTable leads={leads} searchId={search.id} />

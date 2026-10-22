@@ -22,8 +22,8 @@ const ACTIVE_STATUSES: SearchStatus[] = [
 
 const STATUS_MESSAGES: Record<string, string> = {
   queued: "Waiting in queue…",
-  searching: "Searching with the lead provider…",
-  collecting: "Receiving provider results…",
+  searching: "Searching the L.I.O. directory…",
+  collecting: "Receiving business results…",
   checking: "Finalizing results…",
   completed: "Search complete",
   cancelled: "Search cancelled",
@@ -272,7 +272,7 @@ class SearchManager {
       if (!response.ok || !Array.isArray(payload.results)) {
         throw new Error(
           payload.error?.message ||
-            "The lead provider could not complete this search."
+            "The business directory could not complete this search."
         );
       }
 
@@ -311,7 +311,7 @@ class SearchManager {
         errorMessage:
           error instanceof Error
             ? error.message
-            : "The lead provider could not complete this search.",
+            : "The business directory could not complete this search.",
       });
     } finally {
       this.controllers.delete(id);

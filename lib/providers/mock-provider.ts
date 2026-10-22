@@ -4,6 +4,7 @@ import {
   LeadProviderSearchParams,
 } from "./types";
 import { filterMockLeads } from "@/data/mock-leads";
+import { PUBLIC_DATA_SOURCE_LABEL } from "./public";
 
 /**
  * MockLeadProvider — simulates a lead discovery provider.
@@ -12,7 +13,7 @@ import { filterMockLeads } from "@/data/mock-leads";
  */
 export class MockLeadProvider implements LeadProvider {
   getName(): string {
-    return "Mock Business Directory";
+    return PUBLIC_DATA_SOURCE_LABEL;
   }
 
   async search(params: LeadProviderSearchParams): Promise<Lead[]> {

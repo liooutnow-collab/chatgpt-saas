@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 import { LeadRow, type LeadTableColumnKey } from "./LeadRow";
 import { LeadCard } from "./LeadCard";
 import { useSavedLeads } from "@/lib/hooks/use-saved-leads";
@@ -88,7 +89,7 @@ function sortValue(lead: TableLead, column: LeadTableColumnKey): string | number
     case "email": return lead.email ?? null;
     case "rating": return lead.rating;
     case "signals": return `${lead.hasWebsite ? "1" : "0"}${lead.hasPhone ? "1" : "0"}${lead.websiteQuality}`;
-    case "source": return lead.source;
+    case "source": return PUBLIC_DATA_SOURCE_LABEL;
     case "savedAt": return lead.savedAt ?? null;
     case "action": return null;
   }

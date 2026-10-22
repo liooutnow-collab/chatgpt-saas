@@ -6,6 +6,7 @@ import { GeoapifyProviderError } from "@/lib/providers/geoapify-provider";
 import type { Lead, LeadProviderSearchParams } from "@/lib/providers/types";
 import { isAllowedResultCount, RESULT_COUNT_OPTIONS } from "@/lib/search/limits";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 
 type RequestBody = Partial<LeadProviderSearchParams> & { requestId?: unknown };
 type QuotaRow = {
@@ -220,6 +221,25 @@ function validUniqueResults(leads: Lead[], maximum: number): Lead[] {
   return results;
 }
 
+function publicizeLead(lead: Lead): Lead {
+  const sourceId = lead.sourceId.startsWith("lio_")
+    ? lead.sourceId
+    : `lio_${createHash("sha256").update(lead.sourceId).digest("hex").slice(0, 24)}`;
+  const id = lead.id.startsWith("lead_public_")
+    ? lead.id
+    : `lead_public_${createHash("sha256").update(`${lead.sourceId}:${lead.businessName}`).digest("hex").slice(0, 24)}`;
+  return {
+    ...lead,
+    id,
+    source: PUBLIC_DATA_SOURCE_LABEL,
+    sourceId,
+  };
+}
+
+function publicizeResults(leads: Lead[]): Lead[] {
+  return leads.map(publicizeLead);
+}
+
 async function releaseReservation(client: SupabaseClient, requestId: string) {
   try {
     await client.rpc("release_discovery_quota", { p_attempt_id: requestId });
@@ -290,8 +310,8 @@ export async function POST(request: NextRequest) {
           return errorResponse("DUPLICATE_REQUEST", "This attempt ID belongs to a different search. Start a new attempt.", 409);
         }
         return NextResponse.json({
-          provider: cachedData.provider,
-          results: cachedData.results,
+          provider: PUBLIC_DATA_SOURCE_LABEL,
+          results: publicizeResults(cachedData.results),
           meta: cachedData.meta,
         }, {
           headers: { "Cache-Control": "no-store, max-age=0" },
@@ -323,9 +343,9 @@ export async function POST(request: NextRequest) {
       return new Response(null, { status: 499 });
     }
 
-    const results = validUniqueResults(result.leads, providerLimit);
+    const results = publicizeResults(validUniqueResults(result.leads, providerLimit));
     const storedResponse: CachedSearchResponse = {
-      provider: result.provider,
+      provider: PUBLIC_DATA_SOURCE_LABEL,
       results,
       meta: {
         requestedCount,
@@ -380,6 +400,6 @@ export async function POST(request: NextRequest) {
       }
       return errorResponse(error.code, error.publicMessage, error.statusCode);
     }
-    return errorResponse("PROVIDER_ERROR", "The lead provider could not complete this search.", 502);
+    return errorResponse("PROVIDER_ERROR", "The business directory could not complete this search.", 502);
   }
 }

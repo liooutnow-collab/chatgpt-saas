@@ -161,7 +161,7 @@ export function Sidebar() {
           </a>
           <div className="text-[11px] leading-relaxed text-slate-500">
             {email ? (
-              <>Server-side lead provider connected.<br />Weekly usage is enforced per account.</>
+              <>Business directory connected.<br />Weekly usage is enforced per account.</>
             ) : (
               <>Sign in to start new searches.<br />Usage is enforced per account.</>
             )}

@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import type { Lead } from "@/lib/providers/types";
+import { PUBLIC_DATA_SOURCE_LABEL } from "@/lib/providers/public";
 import {
   getLeadAddress,
   getMapHref,
@@ -162,7 +163,7 @@ export function LeadDetailsDialog({ lead, onClose }: Props) {
             )}
             <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-3 py-1.5 text-sm text-slate-600">
               <Building2 className="h-4 w-4 text-slate-400" />
-              {lead.source}
+              {PUBLIC_DATA_SOURCE_LABEL}
             </span>
           </div>
 
@@ -240,7 +241,7 @@ export function LeadDetailsDialog({ lead, onClose }: Props) {
 
           <div className="flex items-center gap-2 border-t border-slate-100 pt-4 text-xs text-slate-400">
             <CheckCircle2 className="h-4 w-4" />
-            Listing details provided by {lead.source}.
+            Listing details provided by {PUBLIC_DATA_SOURCE_LABEL}.
           </div>
         </div>
       </section>
