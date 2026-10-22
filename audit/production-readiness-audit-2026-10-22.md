@@ -124,3 +124,10 @@ This report intentionally distinguishes repository evidence from assumptions and
 ## Important remaining activation step
 
 The new SQL migration is committed and deployed with the application, but this sandbox has no Supabase CLI or management/service-role connection, so the migration was not applied directly to the Supabase project during this pass. The quota guard is therefore verified in source and build/runtime checks but remains **pending database migration application** in the actual Supabase project. Until that migration is applied, treat the quota-settlement bypass as unresolved in production. The current Vercel project also has no server-only Supabase service-role key, so the stronger service-attested settlement design remains a future hardening task.
+
+## Next remediation section: abuse and resource-exhaustion control
+
+- Added `supabase/migrations/20261022150000_discovery_rate_limit.sql`.
+- The migration creates a private per-user one-minute counter and a trigger on reservation creation/reuse. It caps reservation attempts at 30 per minute and applies to direct authenticated RPC attempts as well as the Next.js route.
+- Verification: lint and production build passed; targeted assertions confirmed the private counter, trigger, cap, and `discovery_rate_limit_exceeded` failure path.
+- This control is also **pending database migration application** in the live Supabase project. No live load test was run.
